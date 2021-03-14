@@ -1,11 +1,16 @@
-import './App.css';
+import React from "react";
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Button from "@material-ui/core/Button";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <h1>Todo list app</h1>
-    </div>
+    <>
+      <CssBaseline />
+      <Button variant="contained" color="primary">
+        Hello World
+      </Button>
+    </>
   );
-}
+};
 
 export default App;
