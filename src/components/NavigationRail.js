@@ -15,12 +15,15 @@ import IconButton from "@material-ui/core/IconButton";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import MenuIcon from "@material-ui/icons/Menu";
-import AssignmentOutlinedIcon from "@material-ui/icons/AssignmentOutlined";
-import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneOutlined";
-import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
-import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
+import AssignmentIcon from "@material-ui/icons/Assignment";
+import NotificationsIcon from "@material-ui/icons/Notifications";
+import ArchiveIcon from "@material-ui/icons/Archive";
+import SettingsIcon from "@material-ui/icons/Settings";
+import DeleteIcon from "@material-ui/icons/Delete";
+import InfoIcon from "@material-ui/icons/Info";
 import { makeStyles } from "@material-ui/core/styles";
 import CustomBottomNavigation from "./CustomBottomNavigation";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 260;
 
@@ -99,11 +102,17 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     backgroundColor: theme.palette.primary.main,
   },
+  drawerItems: {
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
+  },
 }));
 
-const Navigation = () => {
+const NavigationRail = () => {
   const classes = useStyles();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [appBarTitle, setAppBarTitle] = useState("Notes");
 
   const handleDrawerToggle = () => {
     setIsDrawerOpen(!isDrawerOpen);
@@ -118,19 +127,33 @@ const Navigation = () => {
   const drawercontent = [
     {
       title: "Notes",
-      icon: <AssignmentOutlinedIcon />,
+      icon: <AssignmentIcon />,
+      permanent: false,
     },
     {
       title: "Reminders",
-      icon: <NotificationsNoneOutlinedIcon />,
+      icon: <NotificationsIcon />,
+      permanent: false,
     },
     {
       title: "Archive",
-      icon: <ArchiveOutlinedIcon />,
+      icon: <ArchiveIcon />,
+      permanent: false,
     },
     {
       title: "Trash",
-      icon: <DeleteOutlinedIcon />,
+      icon: <DeleteIcon />,
+      permanent: false,
+    },
+    {
+      title: "settings",
+      icon: <SettingsIcon />,
+      permanent: true,
+    },
+    {
+      title: "About",
+      icon: <InfoIcon />,
+      permanent: true,
     },
   ];
 
@@ -166,9 +189,16 @@ const Navigation = () => {
       <Divider />
       <List>
         {drawercontent.map((content) => (
-          <ListItem button key={content.title}>
+          <ListItem
+            className={!content.permanent ? classes.drawerItems : ""}
+            button
+            onClick={() => setAppBarTitle(content.title)}
+            key={content.title}
+            component={Link}
+            to={content.title.toLowerCase()}
+          >
             <ListItemIcon>{content.icon}</ListItemIcon>
-            <ListItemText primary={content.title} dense />
+            <ListItemText primary={content.title} />
           </ListItem>
         ))}
       </List>
@@ -189,7 +219,7 @@ const Navigation = () => {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            Todo list app
+            {appBarTitle}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -224,9 +254,14 @@ const Navigation = () => {
           </Drawer>
         </Hidden>
       </nav>
-      <CustomBottomNavigation value={value} handleChange={handleChange} />
+      <CustomBottomNavigation
+        value={value}
+        handleChange={handleChange}
+        drawercontent={drawercontent}
+        setAppBarTitle={setAppBarTitle}
+      />
     </>
   );
 };
 
-export default Navigation;
+export default NavigationRail;

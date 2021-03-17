@@ -2,12 +2,9 @@ import React from "react";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import Hidden from "@material-ui/core/Hidden";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
-import AssignmentOutlinedIcon from "@material-ui/icons/AssignmentOutlined";
-import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneOutlined";
-import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
-import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import grey from "@material-ui/core/colors/grey";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   bottomNavigation: {
@@ -60,30 +57,21 @@ const CustomBottomNavigation = (props) => {
         showLabels
         onChange={props.handleChange}
       >
-        <BottomNavigationAction
-          classes={actionClasses}
-          label="Notes"
-          value="notes"
-          icon={<AssignmentOutlinedIcon />}
-        />
-        <BottomNavigationAction
-          classes={actionClasses}
-          label="Reminders"
-          value="reminders"
-          icon={<NotificationsNoneOutlinedIcon />}
-        />
-        <BottomNavigationAction
-          classes={actionClasses}
-          label="Archive"
-          value="archive"
-          icon={<ArchiveOutlinedIcon />}
-        />
-        <BottomNavigationAction
-          classes={actionClasses}
-          label="Trash"
-          value="trash"
-          icon={<DeleteOutlinedIcon />}
-        />
+        {props.drawercontent.map(
+          (content) =>
+            !content.permanent && (
+              <BottomNavigationAction
+                key={content.title}
+                classes={actionClasses}
+                onClick={() => props.setAppBarTitle(content.title)}
+                label={content.title}
+                component={Link}
+                to={content.title.toLowerCase()}
+                value={content.title.toLowerCase()}
+                icon={content.icon}
+              />
+            )
+        )}
       </BottomNavigation>
     </Hidden>
   );
