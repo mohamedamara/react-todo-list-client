@@ -1,5 +1,6 @@
 import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import NavigationRail from "./components/NavigationRail";
@@ -32,16 +33,17 @@ const useStyles = makeStyles((theme) => ({
   offset: {
     height: 90,
   },
-  content: {
+  container: {
     flexGrow: 1,
     [theme.breakpoints.down("sm")]: {
-      padding: theme.spacing(0, 3),
+      marginTop: "80px",
     },
     [theme.breakpoints.up("lg")]: {
-      // padding: theme.spacing(5, 3),
+      marginTop: "160px",
     },
     [theme.breakpoints.only("md")]: {
-      paddingLeft: "120px",
+      marginTop: "100px",
+      marginLeft: "120px",
     },
   },
 }));
@@ -54,29 +56,18 @@ const App = () => {
         <div className={classes.root}>
           <CssBaseline />
           <NavigationRail />
-          <main className={classes.content}>
-            <div className={classes.offset} />
-            <Grid
-              container
-              spacing={0}
-              direction="column"
-              alignItems="center"
-              justify="center"
-              style={{ minHeight: "80vh" }}
-            >
-              <Grid item xs={9} md={8} lg={5}>
-                <Switch>
-                  <Redirect exact from="/" to="notes" />
-                  <Route exact path="/reminders" component={Reminders} />
-                  <Route exact path="/archive" component={Archive} />
-                  <Route exact path="/trash" component={Trash} />
-                  <Route exact path="/settings" component={Settings} />
-                  <Route exact path="/about" component={About} />
-                  <Route exact path="/notes" component={Notes} />
-                </Switch>
-              </Grid>
-            </Grid>
-          </main>
+          <div className={classes.offset} />
+          <Container maxWidth="md" className={classes.container}>
+            <Switch>
+              <Redirect exact from="/" to="notes" />
+              <Route exact path="/reminders" component={Reminders} />
+              <Route exact path="/archive" component={Archive} />
+              <Route exact path="/trash" component={Trash} />
+              <Route exact path="/settings" component={Settings} />
+              <Route exact path="/about" component={About} />
+              <Route exact path="/notes" component={Notes} />
+            </Switch>
+          </Container>
         </div>
       </Router>
     </MuiThemeProvider>

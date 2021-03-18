@@ -1,18 +1,26 @@
 import React from "react";
-import notes from "./assets/notes.svg";
 import { makeStyles } from "@material-ui/core/styles";
+import NoteItem from "./NoteItem";
+import { Grid } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
-  img: {
-    maxWidth: "90%",
-    display: "block",
-    height: "auto",
-  },
-}));
+const useStyles = makeStyles((theme) => ({}));
 
 const Notes = () => {
   const classes = useStyles();
-  return <img src={notes} alt="" className={classes.img} />;
+  return (
+    <Grid
+      container
+      direction="row"
+      justify="flex-start"
+      alignItems="center"
+      spacing={3}
+    >
+      <NoteItem />
+      <NoteItem />
+      <NoteItem />
+      <NoteItem />
+    </Grid>
+  );
 };
 
 export default Notes;
