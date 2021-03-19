@@ -36,7 +36,7 @@ const useStyles = makeStyles({
   },
 });
 
-const NoteItem = () => {
+const NoteItem = (props) => {
   const classes = useStyles();
   const [cardElevation, setCardElevation] = useState(0);
 
@@ -50,10 +50,10 @@ const NoteItem = () => {
       >
         <CardContent>
           <Typography variant="h5" component="h2" className={classes.pos}>
-            benevolent
+            {props.title}
           </Typography>
           <Typography variant="body2" component="p">
-            well meaning and kindly text to show long todo content.
+            {props.content}
           </Typography>
         </CardContent>
         <CardActions>

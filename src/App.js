@@ -17,6 +17,8 @@ import Notes from "./components/Notes";
 import Archive from "./components/Archive";
 import Settings from "./components/Settings";
 import About from "./components/About";
+import { Provider } from "react-redux";
+import store from "./store/store";
 
 const themeLight = createMuiTheme({
   palette: {
@@ -51,26 +53,28 @@ const useStyles = makeStyles((theme) => ({
 const App = () => {
   const classes = useStyles();
   return (
-    <MuiThemeProvider theme={themeLight}>
-      <Router>
-        <div className={classes.root}>
-          <CssBaseline />
-          <NavigationRail />
-          <div className={classes.offset} />
-          <Container maxWidth="md" className={classes.container}>
-            <Switch>
-              <Redirect exact from="/" to="notes" />
-              <Route exact path="/reminders" component={Reminders} />
-              <Route exact path="/archive" component={Archive} />
-              <Route exact path="/trash" component={Trash} />
-              <Route exact path="/settings" component={Settings} />
-              <Route exact path="/about" component={About} />
-              <Route exact path="/notes" component={Notes} />
-            </Switch>
-          </Container>
-        </div>
-      </Router>
-    </MuiThemeProvider>
+    <Provider store={store}>
+      <MuiThemeProvider theme={themeLight}>
+        <Router>
+          <div className={classes.root}>
+            <CssBaseline />
+            <NavigationRail />
+            <div className={classes.offset} />
+            <Container maxWidth="md" className={classes.container}>
+              <Switch>
+                <Redirect exact from="/" to="notes" />
+                <Route exact path="/reminders" component={Reminders} />
+                <Route exact path="/archive" component={Archive} />
+                <Route exact path="/trash" component={Trash} />
+                <Route exact path="/settings" component={Settings} />
+                <Route exact path="/about" component={About} />
+                <Route exact path="/notes" component={Notes} />
+              </Switch>
+            </Container>
+          </div>
+        </Router>
+      </MuiThemeProvider>
+    </Provider>
   );
 };
 
