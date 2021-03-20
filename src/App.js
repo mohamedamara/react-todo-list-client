@@ -17,6 +17,8 @@ import Notes from "./components/Notes";
 import Archive from "./components/Archive";
 import Settings from "./components/Settings";
 import About from "./components/About";
+import Register from "./components/auth/Register";
+import Login from "./components/auth/Login";
 import { Provider } from "react-redux";
 import store from "./store/store";
 
@@ -50,6 +52,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const RegisterContainer = () => <Route path="/register" component={Register} />;
+const LoginContainer = () => <Route path="/login" component={Login} />;
+const DefaultContainer = () => {
+  const classes = useStyles();
+  return (
+    <>
+      <NavigationRail />
+      <div className={classes.offset} />
+      <div>
+        <Container maxWidth="md" className={classes.container}>
+          <Redirect exact from="/" to="notes" />
+          <Route path="/reminders" component={Reminders} />
+          <Route path="/archive" component={Archive} />
+          <Route path="/trash" component={Trash} />
+          <Route path="/settings" component={Settings} />
+          <Route path="/about" component={About} />
+          <Route path="/notes" component={Notes} />
+        </Container>
+      </div>
+    </>
+  );
+};
+
 const App = () => {
   const classes = useStyles();
   return (
@@ -58,19 +83,11 @@ const App = () => {
         <Router>
           <div className={classes.root}>
             <CssBaseline />
-            <NavigationRail />
-            <div className={classes.offset} />
-            <Container maxWidth="md" className={classes.container}>
-              <Switch>
-                <Redirect exact from="/" to="notes" />
-                <Route exact path="/reminders" component={Reminders} />
-                <Route exact path="/archive" component={Archive} />
-                <Route exact path="/trash" component={Trash} />
-                <Route exact path="/settings" component={Settings} />
-                <Route exact path="/about" component={About} />
-                <Route exact path="/notes" component={Notes} />
-              </Switch>
-            </Container>
+            <Switch>
+              <Route exact path="/register" component={RegisterContainer} />
+              <Route exact path="/login" component={LoginContainer} />
+              <Route component={DefaultContainer} />
+            </Switch>
           </div>
         </Router>
       </MuiThemeProvider>

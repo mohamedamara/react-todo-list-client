@@ -1,12 +1,12 @@
-import { GET_NOTES } from "./types";
-import axios from 'axios';
+import { GET_NOTES, SET_LOADING } from "./types";
+import axios from "axios";
 
 //Get notes from server
 export const getNotes = () => async (dispatch) => {
   try {
-    // setLoading();
+    setLoading();
 
-    const res = await axios.get("https://jsonplaceholder.typicode.com/todos");
+    const res = await axios.get("https://jsonplaceholder.typicode.com/todos?_limit=10'");
     dispatch({
       type: GET_NOTES,
       payload: res.data,
@@ -18,4 +18,10 @@ export const getNotes = () => async (dispatch) => {
     //   payload: err.response.statusText,
     // });
   }
+};
+
+export const setLoading = () => {
+  return {
+    type: SET_LOADING,
+  };
 };
