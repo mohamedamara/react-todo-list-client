@@ -4,12 +4,7 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import NavigationRail from "./components/NavigationRail";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-} from "react-router-dom";
+import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import Trash from "./components/Trash";
 import Reminders from "./components/Reminders";
@@ -75,24 +70,26 @@ const DefaultContainer = () => {
   );
 };
 
-const App = () => {
+const App = ({ location }) => {
+  const locationPath = location;
   const classes = useStyles();
   return (
     <Provider store={store}>
       <MuiThemeProvider theme={themeLight}>
-        <Router>
-          <div className={classes.root}>
-            <CssBaseline />
-            <Switch>
-              <Route exact path="/register" component={RegisterContainer} />
-              <Route exact path="/login" component={LoginContainer} />
-              <Route component={DefaultContainer} />
-            </Switch>
-          </div>
-        </Router>
+        {locationPath !== "/signin" && locationPath !== "/signup" && (
+          <NavigationRail />
+        )}
+        <Switch>
+          <Route exact path="/" component={Notes} />
+          <Route exact path="/signin" component={Notes} />
+          <Route exact path="/signup" component={Notes} />
+          <Route path="/reminders" component={Reminders} />
+          <Route path="/archive" component={Archive} />
+          <Route path="/trash" component={Trash} />
+        </Switch>
       </MuiThemeProvider>
     </Provider>
   );
 };
 
-export default App;
+export default withRouter(App);
