@@ -1,5 +1,4 @@
 import React from "react";
-import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import pageNotFound from "../assets/page_not_found.svg";
 import { makeStyles } from "@material-ui/core/styles";

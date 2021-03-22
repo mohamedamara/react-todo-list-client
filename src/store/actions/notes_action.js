@@ -6,7 +6,7 @@ export const getNotes = () => async (dispatch) => {
   try {
     setLoading();
 
-    const res = await axios.get("https://jsonplaceholder.typicode.com/todos?_limit=10'");
+    const res = await axios.get("https://jsonplaceholder.typicode.com/todos?_limit=10");
     dispatch({
       type: GET_NOTES,
       payload: res.data,

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import NoteItem from "./NoteItem";
 import Container from "../Container";
-import { Grid, CircularProgress } from "@material-ui/core";
+import { Grid, CircularProgress, Box } from "@material-ui/core";
 import PropTypes from "prop-types";
 import { getNotes } from "../../store/actions/notes_action";
 
@@ -12,23 +12,21 @@ const Notes = ({ notes: { notes, loading }, getNotes }) => {
     // eslint-disable-next-line
   }, []);
 
-  // const classes = useStyles();
-  if (notes !== null) {
-    console.log(notes);
-  }
-
   if (loading || notes === null) {
     return (
-      <Grid
-        container
-        direction="column"
-        justify="center"
-        alignItems="center"
-        spacing={0}
-        style={{ minHeight: "80vh" }}
-      >
-        <CircularProgress />
-      </Grid>
+      <Container>
+        <div
+          style={{
+            height: "calc(100vh - 200px)",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CircularProgress />
+        </div>
+      </Container>
     );
   }
   return (
@@ -38,11 +36,10 @@ const Notes = ({ notes: { notes, loading }, getNotes }) => {
         direction="row"
         justify="flex-start"
         alignItems="center"
-        xs={12}
         spacing={6}
         style={{
           margin: 0,
-          width: '100%',
+          width: "100%",
         }}
       >
         {notes.map((item) => (
