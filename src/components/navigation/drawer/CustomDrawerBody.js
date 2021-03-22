@@ -9,8 +9,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
-
-const drawerWidth = 260;
+import clsx from "clsx";
 
 const useStyles = makeStyles((theme) => ({
   drawerHeader: {
@@ -26,9 +25,29 @@ const useStyles = makeStyles((theme) => ({
   drawerHeaderSubtitle: {
     margin: theme.spacing(0, 0, 0, 2.5),
   },
+  drawerItems: {
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
+  },
+  list: {
+    padding: "0px",
+  },
+  listItemColor: {
+    backgroundColor: "#3f51b514",
+    color: "#3f51b5",
+  },
+  listItemHoverColor: {
+    "&:hover": {
+      backgroundColor: "#3f51b514",
+    },
+  },
+  listItemIconColor: {
+    color: "#3f51b5",
+  },
 }));
 
-const DrawerBody = ({ setAppBarTitle, navigationItems }) => {
+const CustomDrawerBody = (props) => {
   const classes = useStyles();
   return (
     <>
@@ -60,17 +79,34 @@ const DrawerBody = ({ setAppBarTitle, navigationItems }) => {
         </Typography>
       </Grid>
       <Divider />
-      <List>
-        {navigationItems.map((content) => (
+      <List className={classes.list}>
+        {props.navigationItems.map((content) => (
           <ListItem
-            className={!content.permanent ? classes.drawerItems : ""}
+            className={clsx(classes.listItemHoverColor, {
+              [classes.drawerItems]: !content.permanent,
+              [classes.listItemColor]:
+                content.title === props.selectedNavigation,
+              [classes.listItemHoverColor]:
+                content.title !== props.selectedNavigation,
+            })}
             button
-            onClick={() => setAppBarTitle(content.title)}
+            onClick={() => {
+              props.setAppBarTitle(content.title);
+              props.handleSelectedChange(content.title);
+            }}
             key={content.title}
             component={Link}
             to={content.title.toLowerCase()}
           >
-            <ListItemIcon>{content.icon}</ListItemIcon>
+            <ListItemIcon
+              className={classes.listItemIconColor}
+              className={clsx({
+                [classes.listItemIconColor]:
+                  content.title === props.selectedNavigation,
+              })}
+            >
+              {content.icon}
+            </ListItemIcon>
             <ListItemText primary={content.title} />
           </ListItem>
         ))}
@@ -79,4 +115,4 @@ const DrawerBody = ({ setAppBarTitle, navigationItems }) => {
   );
 };
 
-export default DrawerBody;
+export default CustomDrawerBody;

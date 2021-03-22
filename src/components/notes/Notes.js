@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import NoteItem from "./NoteItem";
+import Container from "../Container";
 import { Grid, CircularProgress } from "@material-ui/core";
 import PropTypes from "prop-types";
 import { getNotes } from "../../store/actions/notes_action";
@@ -24,24 +25,31 @@ const Notes = ({ notes: { notes, loading }, getNotes }) => {
         justify="center"
         alignItems="center"
         spacing={0}
-        style={{ minHeight: '80vh' }}
+        style={{ minHeight: "80vh" }}
       >
         <CircularProgress />
       </Grid>
     );
   }
   return (
-    <Grid
-      container
-      direction="row"
-      justify="flex-start"
-      alignItems="center"
-      spacing={3}
-    >
-      {notes.map((item) => (
-        <NoteItem key={item.id} title={item.id} content={item.title} />
-      ))}
-    </Grid>
+    <Container>
+      <Grid
+        container
+        direction="row"
+        justify="flex-start"
+        alignItems="center"
+        xs={12}
+        spacing={6}
+        style={{
+          margin: 0,
+          width: '100%',
+        }}
+      >
+        {notes.map((item) => (
+          <NoteItem key={item.id} title={item.id} content={item.title} />
+        ))}
+      </Grid>
+    </Container>
   );
 };
 

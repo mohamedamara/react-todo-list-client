@@ -6,7 +6,6 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import ArchiveIcon from "@material-ui/icons/Archive";
 import DeleteIcon from "@material-ui/icons/Delete";
 
@@ -56,12 +55,6 @@ const NoteItem = (props) => {
           </Typography>
         </CardContent>
         <CardActions>
-          <IconButton
-            aria-label="add to reminders"
-            className={classes.cardButton}
-          >
-            <NotificationsIcon />
-          </IconButton>
           <IconButton
             aria-label="add to archive"
             className={classes.cardButton}

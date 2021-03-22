@@ -1,5 +1,6 @@
 import React from "react";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
+import Divider from "@material-ui/core/Divider";
 import Hidden from "@material-ui/core/Hidden";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import grey from "@material-ui/core/colors/grey";
@@ -11,16 +12,25 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       width: "100%",
       position: "fixed",
-      bottom: 0,
+      bottom: "0px",
       backgroundColor: theme.palette.primary.main,
     },
     [theme.breakpoints.only("md")]: {
       flexDirection: "column",
-      minHeight: 420,
-      width: 96,
+      minHeight: "420px",
+      width: "96px",
       position: "fixed",
-      top: 64,
-      left: 0,
+      top: "35px",
+      left: "0px",
+    },
+  },
+  divider: {
+    [theme.breakpoints.only("md")]: {
+      minHeight: "420px",
+      width: "1px",
+      position: "fixed",
+      top: "0px",
+      left: "96px",
     },
   },
 }));
@@ -31,6 +41,7 @@ const styles = (theme) => ({
       flex: 0,
       padding: "25px 5px 8px",
       "&$selected": {
+        color: "#3f51b5",
         padding: "25px 5px 8px",
       },
     },
@@ -51,28 +62,33 @@ const CustomBottomNavigation = (props) => {
   const classes = useStyles();
   return (
     <Hidden lgUp implementation="css">
-      <BottomNavigation
-        className={classes.bottomNavigation}
-        value={props.value}
-        showLabels
-        onChange={props.handleChange}
-      >
-        {props.navigationItems.map(
-          (content) =>
-            !content.permanent && (
-              <BottomNavigationAction
-                key={content.title}
-                classes={actionClasses}
-                onClick={() => props.setAppBarTitle(content.title)}
-                label={content.title}
-                component={Link}
-                to={content.title.toLowerCase()}
-                value={content.title.toLowerCase()}
-                icon={content.icon}
-              />
-            )
-        )}
-      </BottomNavigation>
+      <div>
+        <BottomNavigation
+          className={classes.bottomNavigation}
+          value={props.selectedNavigation}
+          showLabels
+          onChange={(event, newValue) => {
+            props.handleSelectedChange(newValue);
+          }}
+        >
+          {props.navigationItems.map(
+            (content) =>
+              !content.permanent && (
+                <BottomNavigationAction
+                  key={content.title}
+                  classes={actionClasses}
+                  onClick={() => props.setAppBarTitle(content.title)}
+                  label={content.title}
+                  component={Link}
+                  to={content.title.toLowerCase()}
+                  value={content.title}
+                  icon={content.icon}
+                />
+              )
+          )}
+        </BottomNavigation>
+        <Divider orientation="vertical" className={classes.divider} />
+      </div>
     </Hidden>
   );
 };

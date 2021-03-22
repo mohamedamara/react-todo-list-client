@@ -34,13 +34,12 @@ const NavigationRail = () => {
   const classes = useStyles();
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  
   const [appBarTitle, setAppBarTitle] = useState("Notes");
   const handleDrawerToggle = () => setIsDrawerOpen(!isDrawerOpen);
-  const [value, setValue] = useState("Notes");
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const [selectedNavigation, setSelectedNavigation] = useState("Notes");
+  const handleSelectedChange = (newValue) => setSelectedNavigation(newValue);
 
   return (
     <>
@@ -53,12 +52,15 @@ const NavigationRail = () => {
       </Fab>
       <CustomDrawer
         handleDrawerToggle={handleDrawerToggle}
+        isDrawerOpen={isDrawerOpen}
         setAppBarTitle={setAppBarTitle}
         navigationItems={navigationItems}
+        selectedNavigation={selectedNavigation}
+        handleSelectedChange={handleSelectedChange}
       />
       <CustomBottomNavigation
-        value={value}
-        handleChange={handleChange}
+        selectedNavigation={selectedNavigation}
+        handleSelectedChange={handleSelectedChange}
         navigationItems={navigationItems}
         setAppBarTitle={setAppBarTitle}
       />
