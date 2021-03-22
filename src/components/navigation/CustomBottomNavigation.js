@@ -57,7 +57,7 @@ const CustomBottomNavigation = (props) => {
         showLabels
         onChange={props.handleChange}
       >
-        {props.drawercontent.map(
+        {props.navigationItems.map(
           (content) =>
             !content.permanent && (
               <BottomNavigationAction

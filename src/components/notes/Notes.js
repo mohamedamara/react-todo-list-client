@@ -1,12 +1,9 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
 import NoteItem from "./NoteItem";
 import { Grid, CircularProgress } from "@material-ui/core";
 import PropTypes from "prop-types";
-import { getNotes } from "../store/actions/notes_action";
-
-const useStyles = makeStyles((theme) => ({}));
+import { getNotes } from "../../store/actions/notes_action";
 
 const Notes = ({ notes: { notes, loading }, getNotes }) => {
   useEffect(() => {

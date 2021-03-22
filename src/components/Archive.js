@@ -1,7 +1,7 @@
 import React from "react";
 
 const Archive = () => {
-  return <div></div>;
+  return <div>archive component</div>;
 };
 
 export default Archive;

@@ -1,7 +1,7 @@
 import React from "react";
 
 const Trash = () => {
-  return <div></div>;
+  return <div>trash component</div>;
 };
 
 export default Trash;
