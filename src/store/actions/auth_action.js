@@ -1,10 +1,18 @@
-import { GET_NOTES, SET_LOADING } from "./types";
 import axios from "axios";
+import {
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
+  USER_LOADED,
+  AUTH_ERROR,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  LOGOUT,
+  CLEAR_ERRORS,
+} from "./types";
 
 export const loadUser = () => async (dispatch) => {
   try {
     setLoading();
-
     const res = await axios.get(
       "https://jsonplaceholder.typicode.com/todos?_limit=10'"
     );
@@ -14,10 +22,10 @@ export const loadUser = () => async (dispatch) => {
     });
   } catch (err) {
     console.log(err);
-    // dispatch({
-    //   type: LOGS_ERROR,
-    //   payload: err.response.statusText,
-    // });
+    dispatch({
+      type: LOGS_ERROR,
+      payload: err.response.statusText,
+    });
   }
 };
 export const register = () => async (dispatch) => {

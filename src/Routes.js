@@ -1,8 +1,8 @@
 import React from "react";
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import NavigationRail from "./components/navigation/NavigationRail";
-import Signup from "./components/auth/Signup";
-import Signin from "./components/auth/Signin";
+import Register from "./components/auth/Register";
+import Login from "./components/auth/Login";
 import Notes from "./components/notes/Notes";
 import Archive from "./components/Archive";
 import Trash from "./components/Trash";
@@ -14,13 +14,13 @@ const Routes = ({ location }) => {
   const locationPath = location.pathname;
   return (
     <div>
-      {locationPath !== "/signin" &&
-        locationPath !== "/signup" &&
+      {locationPath !== "/register" &&
+        locationPath !== "/login" &&
         locationPath !== "/404" && <NavigationRail />}
       <Switch>
         <Redirect exact from="/" to="notes" />
-        <Route path="/signup" component={Signup} />
-        <Route path="/signin" component={Signin} />
+        <Route path="/register" component={Register} />
+        <Route path="/login" component={Login} />
         <Route path="/notes" component={Notes} />
         <Route path="/archive" component={Archive} />
         <Route path="/trash" component={Trash} />

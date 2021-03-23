@@ -99,7 +99,6 @@ const CustomDrawerBody = (props) => {
             to={content.title.toLowerCase()}
           >
             <ListItemIcon
-              className={classes.listItemIconColor}
               className={clsx({
                 [classes.listItemIconColor]:
                   content.title === props.selectedNavigation,

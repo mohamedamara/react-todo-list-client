@@ -7,7 +7,7 @@ const initialState = {
   // error: null,
 };
 
-export default (state = initialState, action) => {
+const notesReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_NOTES:
       return {
@@ -24,3 +24,5 @@ export default (state = initialState, action) => {
       return state;
   }
 };
+
+export default notesReducer;
