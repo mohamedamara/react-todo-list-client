@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { register, clearErrors } from "../../store/actions/auth_action";
 import Container from "@material-ui/core/Container";
 import Avatar from "@material-ui/core/Avatar";
+import Snackbar from "@material-ui/core/Snackbar";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
@@ -53,8 +57,25 @@ const validationSchema = yup.object({
     .required("Password is required"),
 });
 
-const Register = () => {
+const Register = ({ auth: { error }, register, clearErrors }) => {
   const classes = useStyles();
+  const [open, setOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    if (error === "User already exists") {
+      setSnackbarMessage(error);
+      setOpen(true);
+      clearErrors();
+    }
+    // eslint-disable-next-line
+  }, [error]);
 
   const formik = useFormik({
     initialValues: {
@@ -65,7 +86,7 @@ const Register = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      register(values);
     },
   });
 
@@ -181,8 +202,28 @@ const Register = () => {
           {"."}
         </Typography>
       </Box>
+      <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        open={open}
+        autoHideDuration={2000}
+        onClose={handleClose}
+        message={snackbarMessage}
+      />
     </Container>
   );
 };
 
-export default Register;
+Register.propTypes = {
+  auth: PropTypes.object.isRequired,
+  register: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { register, clearErrors })(Register);

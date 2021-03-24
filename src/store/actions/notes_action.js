@@ -1,5 +1,5 @@
-import { GET_NOTES, SET_LOADING } from "./types";
 import axios from "axios";
+import { GET_NOTES, SET_LOADING } from "./types";
 
 //Get notes from server
 export const getNotes = () => async (dispatch) => {

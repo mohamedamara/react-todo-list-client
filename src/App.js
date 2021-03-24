@@ -9,7 +9,7 @@ import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 const themeLight = createMuiTheme({
   palette: {
     background: {
-      default: "white",
+      default: "#fff",
     },
   },
 });

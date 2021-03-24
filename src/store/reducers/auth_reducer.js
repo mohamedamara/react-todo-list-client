@@ -10,7 +10,7 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  token: localStorage.getItem("token"),
+  jwt: localStorage.getItem("token"),
   isAuthenticated: null,
   loading: true,
   user: null,
@@ -19,16 +19,39 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_NOTES:
+    case USER_LOADED:
       return {
         ...state,
-        notes: action.payload,
+        isAuthenticated: true,
+        loading: false,
+        user: action.payload,
+      };
+    case REGISTER_SUCCESS:
+    case LOGIN_SUCCESS:
+      localStorage.setItem("jwt", action.payload.jwt);
+      return {
+        ...state,
+        ...action.payload,
+        isAuthenticated: true,
         loading: false,
       };
-    case SET_LOADING:
+    case REGISTER_FAIL:
+    case AUTH_ERROR:
+    case LOGIN_FAIL:
+    case LOGOUT:
+      localStorage.removeItem("jwt");
       return {
         ...state,
-        loading: true,
+        jwt: null,
+        isAuthenticated: false,
+        loading: false,
+        user: null,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
       };
     default:
       return state;

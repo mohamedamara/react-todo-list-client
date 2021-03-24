@@ -10,65 +10,39 @@ import {
   CLEAR_ERRORS,
 } from "./types";
 
-export const loadUser = () => async (dispatch) => {
+export const loadUser = () => async (dispatch) => {};
+export const register = (formData) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
   try {
-    setLoading();
-    const res = await axios.get(
-      "https://jsonplaceholder.typicode.com/todos?_limit=10'"
+    const res = await axios.post(
+      "http://localhost:5000/api/users",
+      formData,
+      config
     );
+
     dispatch({
-      type: GET_NOTES,
+      type: REGISTER_SUCCESS,
       payload: res.data,
     });
+
+    // loadUser();
   } catch (err) {
     console.log(err);
     dispatch({
-      type: LOGS_ERROR,
-      payload: err.response.statusText,
+      type: REGISTER_FAIL,
+      payload: err.response.data.message,
     });
   }
 };
-export const register = () => async (dispatch) => {
-  try {
-    setLoading();
 
-    const res = await axios.get(
-      "https://jsonplaceholder.typicode.com/todos?_limit=10'"
-    );
-    dispatch({
-      type: GET_NOTES,
-      payload: res.data,
-    });
-  } catch (err) {
-    console.log(err);
-    // dispatch({
-    //   type: LOGS_ERROR,
-    //   payload: err.response.statusText,
-    // });
-  }
-};
-export const login = () => async (dispatch) => {
-  try {
-    setLoading();
+export const login = () => async (dispatch) => {};
 
-    const res = await axios.get(
-      "https://jsonplaceholder.typicode.com/todos?_limit=10'"
-    );
-    dispatch({
-      type: GET_NOTES,
-      payload: res.data,
-    });
-  } catch (err) {
-    console.log(err);
-    // dispatch({
-    //   type: LOGS_ERROR,
-    //   payload: err.response.statusText,
-    // });
-  }
-};
-
-export const setLoading = () => {
+export const clearErrors = () => {
   return {
-    type: SET_LOADING,
+    type: CLEAR_ERRORS,
   };
 };
