@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import NoteItem from "./NoteItem";
-import Container from "../Container";
+import NoteItem from "../components/NoteItem";
+import Container from "../components/Container";
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import PropTypes from "prop-types";

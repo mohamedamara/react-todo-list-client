@@ -1,6 +1,6 @@
 import React from "react";
 import Box from "@material-ui/core/Box";
-import pageNotFound from "../assets/page_not_found.svg";
+import pageNotFound from "../../assets/page_not_found.svg";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({

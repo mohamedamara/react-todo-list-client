@@ -1,14 +1,14 @@
 import React from "react";
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
-import NavigationRail from "./components/navigation/NavigationRail";
-import Register from "./components/auth/Register";
-import Login from "./components/auth/Login";
-import Notes from "./components/notes/Notes";
-import Archive from "./components/Archive";
-import Trash from "./components/Trash";
-import Settings from "./components/Settings";
-import About from "./components/About";
-import NotFound from "./components/NotFound";
+import NavigationRail from "./ui/components/navigation/NavigationRail";
+import Register from "./ui/pages/Register";
+import Login from "./ui/pages/Login";
+import Notes from "./ui/pages/Notes";
+import Archive from "./ui/pages/Archive";
+import Trash from "./ui/pages/Trash";
+import Settings from "./ui/pages/Settings";
+import About from "./ui/pages/About";
+import NotFound from "./ui/pages/NotFound";
 
 const Routes = ({ location }) => {
   const locationPath = location.pathname;
