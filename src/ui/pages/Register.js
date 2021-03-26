@@ -4,8 +4,6 @@ import PropTypes from "prop-types";
 import { register, clearErrors } from "../../store/actions/auth_action";
 import Container from "@material-ui/core/Container";
 import Avatar from "@material-ui/core/Avatar";
-import Snackbar from "@material-ui/core/Snackbar";
-import Alert from "@material-ui/lab/Alert";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
@@ -17,6 +15,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Link as routerLink } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import CustomSnackbar from "../components/CustomSnackbar";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -61,42 +60,17 @@ const validationSchema = yup.object({
 const Register = ({ auth: { error }, register, clearErrors }) => {
   const classes = useStyles();
   const [snackPack, setSnackPack] = useState([]);
-  const [open, setOpen] = useState(false);
-  const [messageInfo, setMessageInfo] = useState(undefined);
 
   useEffect(() => {
     if (error === "User already exists") {
-      handleClick(error);
+      showSnackbar(error);
       clearErrors();
     }
     // eslint-disable-next-line
   }, [error]);
 
-  useEffect(() => {
-    if (snackPack.length && !messageInfo) {
-      // Set a new snack when we don't have an active one
-      setMessageInfo({ ...snackPack[0] });
-      setSnackPack((prev) => prev.slice(1));
-      setOpen(true);
-    } else if (snackPack.length && messageInfo && open) {
-      // Close an active snack when a new one is added
-      setOpen(false);
-    }
-  }, [snackPack, messageInfo, open]);
-
-  const handleClick = (message) => {
+  const showSnackbar = (message) => {
     setSnackPack((prev) => [...prev, { message, key: new Date().getTime() }]);
-  };
-
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpen(false);
-  };
-
-  const handleExited = () => {
-    setMessageInfo(undefined);
   };
 
   const formik = useFormik({
@@ -224,26 +198,7 @@ const Register = ({ auth: { error }, register, clearErrors }) => {
           {"."}
         </Typography>
       </Box>
-      <Snackbar
-        key={messageInfo ? messageInfo.key : undefined}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "center",
-        }}
-        open={open}
-        autoHideDuration={2000}
-        onClose={handleClose}
-        onExited={handleExited}
-      >
-        <Alert
-          elevation={6}
-          variant="filled"
-          onClose={handleClose}
-          severity="error"
-        >
-          {messageInfo ? messageInfo.message : undefined}
-        </Alert>
-      </Snackbar>
+      <CustomSnackbar snackPack={snackPack} setSnackPack={setSnackPack} />
     </Container>
   );
 };
