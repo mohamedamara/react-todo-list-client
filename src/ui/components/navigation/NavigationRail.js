@@ -38,10 +38,10 @@ const NavigationRail = ({ auth: { user, loading }, loadUser }) => {
   const classes = useStyles();
 
   useEffect(() => {
-    setTimeout(function () {
-      loadUser();
-    }, 5000);
-
+    // setTimeout(function () {
+    //   loadUser();
+    // }, 5000);
+    loadUser();
     // eslint-disable-next-line
   }, []);
 
