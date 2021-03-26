@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import Fab from "@material-ui/core/Fab";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import CustomAppBar from "./CustomAppBar";
 import AddIcon from "@material-ui/icons/Add";
 import CustomBottomNavigation from "./CustomBottomNavigation";
 import CustomDrawer from "./drawer/CustomDrawer";
 import { makeStyles } from "@material-ui/core/styles";
 import { navigationItems } from "./constants";
+import PropTypes from "prop-types";
+import Container from "../Container";
+import { loadUser } from "../../../store/actions/auth_action";
 
 const useStyles = makeStyles((theme) => ({
   fab: {
@@ -30,16 +35,40 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NavigationRail = () => {
+const NavigationRail = ({ auth: { user, loading }, loadUser }) => {
   const classes = useStyles();
 
+  useEffect(() => {
+    loadUser();
+    console.log(user);
+    // eslint-disable-next-line
+  }, []);
+
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  
+
   const [appBarTitle, setAppBarTitle] = useState("Notes");
   const handleDrawerToggle = () => setIsDrawerOpen(!isDrawerOpen);
 
   const [selectedNavigation, setSelectedNavigation] = useState("Notes");
   const handleSelectedChange = (newValue) => setSelectedNavigation(newValue);
+
+  if (loading || user === null) {
+    return (
+      <Container>
+        <div
+          style={{
+            height: "calc(100vh - 200px)",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CircularProgress />
+        </div>
+      </Container>
+    );
+  }
 
   return (
     <>
@@ -57,6 +86,7 @@ const NavigationRail = () => {
         navigationItems={navigationItems}
         selectedNavigation={selectedNavigation}
         handleSelectedChange={handleSelectedChange}
+        user={user}
       />
       <CustomBottomNavigation
         selectedNavigation={selectedNavigation}
@@ -68,4 +98,13 @@ const NavigationRail = () => {
   );
 };
 
-export default NavigationRail;
+NavigationRail.propTypes = {
+  auth: PropTypes.object.isRequired,
+  loadUser: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { loadUser })(NavigationRail);

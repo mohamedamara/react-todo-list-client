@@ -39,6 +39,7 @@ const CustomDrawer = (props) => {
             navigationItems={props.navigationItems}
             selectedNavigation={props.selectedNavigation}
             handleSelectedChange={props.handleSelectedChange}
+            user={props.user}
           />
         </Drawer>
       </Hidden>
@@ -55,6 +56,7 @@ const CustomDrawer = (props) => {
             navigationItems={props.navigationItems}
             selectedNavigation={props.selectedNavigation}
             handleSelectedChange={props.handleSelectedChange}
+            user={props.user}
           />
         </Drawer>
       </Hidden>

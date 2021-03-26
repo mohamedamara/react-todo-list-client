@@ -68,14 +68,14 @@ const CustomDrawerBody = (props) => {
           noWrap
           className={classes.drawerHeaderTitle}
         >
-          John Doe
+          {props.user.firstName + " " + props.user.lastName}
         </Typography>
         <Typography
           variant="caption"
           noWrap
           className={classes.drawerHeaderSubtitle}
         >
-          johndoe@gmail.com
+          {props.user.email}
         </Typography>
       </Grid>
       <Divider />

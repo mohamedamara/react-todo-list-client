@@ -10,7 +10,7 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  jwt: localStorage.getItem("token"),
+  jwt: localStorage.getItem("jwt"),
   isAuthenticated: null,
   loading: true,
   user: null,

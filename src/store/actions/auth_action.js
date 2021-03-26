@@ -1,4 +1,5 @@
 import axios from "axios";
+import setAuthToken from "../../utils/set_auth_token";
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -10,7 +11,19 @@ import {
   CLEAR_ERRORS,
 } from "./types";
 
-export const loadUser = () => async (dispatch) => {};
+export const loadUser = () => async (dispatch) => {
+  setAuthToken(localStorage.jwt);
+  try {
+    const res = await axios.get("http://localhost:5000/api/auth");
+    dispatch({
+      type: USER_LOADED,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({ type: AUTH_ERROR });
+  }
+};
+
 export const register = (formData) => async (dispatch) => {
   const config = {
     headers: {
@@ -23,15 +36,12 @@ export const register = (formData) => async (dispatch) => {
       formData,
       config
     );
-
     dispatch({
       type: REGISTER_SUCCESS,
       payload: res.data,
     });
-
-    // loadUser();
+    dispatch(loadUser());
   } catch (err) {
-    console.log(err);
     dispatch({
       type: REGISTER_FAIL,
       payload: err.response.data.message,

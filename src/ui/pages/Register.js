@@ -12,7 +12,7 @@ import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link as routerLink } from "react-router-dom";
+import { Link as routerLink, useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import CustomSnackbar from "../components/CustomSnackbar";
@@ -57,17 +57,25 @@ const validationSchema = yup.object({
     .required("Password is required"),
 });
 
-const Register = ({ auth: { error }, register, clearErrors }) => {
+const Register = ({
+  auth: { error, isAuthenticated },
+  register,
+  clearErrors,
+}) => {
   const classes = useStyles();
+  const history = useHistory();
   const [snackPack, setSnackPack] = useState([]);
 
   useEffect(() => {
+    if (isAuthenticated) {
+      history.push("/");
+    }
     if (error === "User already exists") {
       showSnackbar(error);
       clearErrors();
     }
     // eslint-disable-next-line
-  }, [error]);
+  }, [error, isAuthenticated]);
 
   const showSnackbar = (message) => {
     setSnackPack((prev) => [...prev, { message, key: new Date().getTime() }]);
