@@ -2,6 +2,7 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
+import { deepOrange } from "@material-ui/core/colors";
 import Avatar from "@material-ui/core/Avatar";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -17,6 +18,8 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerHeaderImage: {
     margin: theme.spacing(1, 0, 0, 2.5),
+    color: theme.palette.getContrastText(deepOrange[500]),
+    backgroundColor: deepOrange[500],
   },
   drawerHeaderTitle: {
     fontWeight: "bold",
@@ -47,6 +50,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const capitalizeFirstLetter = (text) => {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+};
+
 const CustomDrawerBody = (props) => {
   const classes = useStyles();
   return (
@@ -58,17 +65,17 @@ const CustomDrawerBody = (props) => {
         alignItems="flex-start"
         className={classes.drawerHeader}
       >
-        <Avatar
-          alt="Remy Sharp"
-          src="https://material-ui.com/static/images/avatar/1.jpg"
-          className={classes.drawerHeaderImage}
-        />
+        <Avatar className={classes.drawerHeaderImage}>
+          {props.user.firstName.charAt(0).toUpperCase()}
+        </Avatar>
         <Typography
           variant="subtitle2"
           noWrap
           className={classes.drawerHeaderTitle}
         >
-          {props.user.firstName + " " + props.user.lastName}
+          {capitalizeFirstLetter(props.user.firstName) +
+            " " +
+            capitalizeFirstLetter(props.user.lastName)}
         </Typography>
         <Typography
           variant="caption"

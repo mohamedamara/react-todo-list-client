@@ -9,7 +9,6 @@ import CustomDrawer from "./drawer/CustomDrawer";
 import { makeStyles } from "@material-ui/core/styles";
 import { navigationItems } from "./constants";
 import PropTypes from "prop-types";
-import Container from "../Container";
 import { loadUser } from "../../../store/actions/auth_action";
 
 const useStyles = makeStyles((theme) => ({
@@ -39,8 +38,10 @@ const NavigationRail = ({ auth: { user, loading }, loadUser }) => {
   const classes = useStyles();
 
   useEffect(() => {
-    loadUser();
-    console.log(user);
+    setTimeout(function () {
+      loadUser();
+    }, 5000);
+
     // eslint-disable-next-line
   }, []);
 
@@ -54,19 +55,17 @@ const NavigationRail = ({ auth: { user, loading }, loadUser }) => {
 
   if (loading || user === null) {
     return (
-      <Container>
-        <div
-          style={{
-            height: "calc(100vh - 200px)",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <CircularProgress />
-        </div>
-      </Container>
+      <div
+        style={{
+          height: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <CircularProgress />
+      </div>
     );
   }
 
