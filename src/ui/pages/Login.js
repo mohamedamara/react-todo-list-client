@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { login, clearErrors } from "../../store/actions/auth_action";
 import Container from "@material-ui/core/Container";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -9,9 +12,10 @@ import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link as routerLink } from "react-router-dom";
+import { Link as routerLink, useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import CustomSnackbar from "../components/CustomSnackbar";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -41,8 +45,26 @@ const validationSchema = yup.object({
   password: yup.string("Enter your password").required("Password is required"),
 });
 
-const Login = () => {
+const Login = ({ auth: { error, isAuthenticated }, login, clearErrors }) => {
   const classes = useStyles();
+
+  const history = useHistory();
+  const [snackPack, setSnackPack] = useState([]);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      history.push("/");
+    }
+    if (error === "Invalid Credentials") {
+      showSnackbar(error);
+      clearErrors();
+    }
+    // eslint-disable-next-line
+  }, [error, isAuthenticated]);
+
+  const showSnackbar = (message) => {
+    setSnackPack((prev) => [...prev, { message, key: new Date().getTime() }]);
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -51,7 +73,7 @@ const Login = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      login(values);
     },
   });
 
@@ -127,8 +149,19 @@ const Login = () => {
           {"."}
         </Typography>
       </Box>
+      <CustomSnackbar snackPack={snackPack} setSnackPack={setSnackPack} />
     </Container>
   );
 };
 
-export default Login;
+Login.propTypes = {
+  auth: PropTypes.object.isRequired,
+  login: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { login, clearErrors })(Login);

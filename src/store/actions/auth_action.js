@@ -49,7 +49,30 @@ export const register = (formData) => async (dispatch) => {
   }
 };
 
-export const login = () => async (dispatch) => {};
+export const login = (formData) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  try {
+    const res = await axios.post(
+      `${process.env.REACT_APP_API_BASE_URL}/auth`,
+      formData,
+      config
+    );
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: res.data,
+    });
+    dispatch(loadUser());
+  } catch (err) {
+    dispatch({
+      type: LOGIN_FAIL,
+      payload: err.response.data.message,
+    });
+  }
+};
 
 export const clearErrors = () => {
   return {
