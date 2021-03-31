@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
       minHeight: "420px",
       width: "96px",
       position: "fixed",
-      top: "35px",
+      top: "0px",
       left: "0px",
     },
   },
