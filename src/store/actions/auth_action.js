@@ -74,6 +74,12 @@ export const login = (formData) => async (dispatch) => {
   }
 };
 
+export const logout = () => {
+  return {
+    type: LOGOUT,
+  };
+};
+
 export const clearErrors = () => {
   return {
     type: CLEAR_ERRORS,

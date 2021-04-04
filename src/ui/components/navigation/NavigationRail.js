@@ -9,7 +9,7 @@ import CustomDrawer from "./drawer/CustomDrawer";
 import { makeStyles } from "@material-ui/core/styles";
 import { navigationItems } from "./constants";
 import PropTypes from "prop-types";
-import { loadUser } from "../../../store/actions/auth_action";
+import { loadUser, logout } from "../../../store/actions/auth_action";
 
 const useStyles = makeStyles((theme) => ({
   fab: {
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NavigationRail = ({ auth: { user, loading }, loadUser }) => {
+const NavigationRail = ({ auth: { user, loading }, loadUser, logout }) => {
   const classes = useStyles();
 
   useEffect(() => {
@@ -86,6 +86,7 @@ const NavigationRail = ({ auth: { user, loading }, loadUser }) => {
         selectedNavigation={selectedNavigation}
         handleSelectedChange={handleSelectedChange}
         user={user}
+        logout={logout}
       />
       <CustomBottomNavigation
         selectedNavigation={selectedNavigation}
@@ -100,10 +101,11 @@ const NavigationRail = ({ auth: { user, loading }, loadUser }) => {
 NavigationRail.propTypes = {
   auth: PropTypes.object.isRequired,
   loadUser: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { loadUser })(NavigationRail);
+export default connect(mapStateToProps, { loadUser, logout })(NavigationRail);
