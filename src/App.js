@@ -12,6 +12,25 @@ const themeLight = createMuiTheme({
       default: "#fff",
     },
   },
+  overrides: {
+    MuiCssBaseline: {
+      "@global": {
+        "*::-webkit-scrollbar": {
+          width: "8px",
+        },
+        "*::-webkit-scrollbar-track": {
+          background: "#ddd",
+        },
+        "*::-webkit-scrollbar-thumb": {
+          background: "#aaa",
+          borderRadius: "8px",
+          "&:hover": {
+            background: "#999",
+          },
+        },
+      },
+    },
+  },
 });
 
 const App = () => {
