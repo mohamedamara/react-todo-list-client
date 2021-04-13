@@ -20,9 +20,6 @@ const validationSchema = yup.object({
   todoTitle: yup
     .string("Enter your todo title")
     .required("Todo title is required"),
-  todoContent: yup
-    .string("Enter your todo content")
-    .required("Todo content is required"),
 });
 
 const AddNote = (props) => {
@@ -71,7 +68,6 @@ const AddNote = (props) => {
         <TextField
           variant="outlined"
           margin="normal"
-          required
           fullWidth
           name="todoContent"
           label="Todo Content"
