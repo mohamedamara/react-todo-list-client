@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
-import CardActions from "@material-ui/core/CardActions";
+import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import ArchiveIcon from "@material-ui/icons/Archive";
 import DeleteIcon from "@material-ui/icons/Delete";
 
 const useStyles = makeStyles({
@@ -46,25 +45,20 @@ const NoteItem = (props) => {
         onMouseOver={() => setCardElevation(2)}
         onMouseOut={() => setCardElevation(0)}
       >
+        <CardHeader
+          action={
+            <IconButton aria-label="delete" className={classes.cardButton}>
+              <DeleteIcon />
+            </IconButton>
+          }
+          title={props.title}
+          subheader="13/04/2021"
+        />
         <CardContent>
-          <Typography variant="h5" component="h2" className={classes.pos}>
-            {props.title}
-          </Typography>
-          <Typography variant="body2" component="p">
+          <Typography variant="body1" component="p">
             {props.content}
           </Typography>
         </CardContent>
-        <CardActions>
-          <IconButton
-            aria-label="add to archive"
-            className={classes.cardButton}
-          >
-            <ArchiveIcon />
-          </IconButton>
-          <IconButton aria-label="delete" className={classes.cardButton}>
-            <DeleteIcon />
-          </IconButton>
-        </CardActions>
       </Card>
     </Grid>
   );

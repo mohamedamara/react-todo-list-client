@@ -5,10 +5,7 @@ import { GET_NOTES, SET_LOADING } from "./types";
 export const getNotes = () => async (dispatch) => {
   try {
     setLoading();
-
-    const res = await axios.get(
-      "https://jsonplaceholder.typicode.com/todos?_limit=10"
-    );
+    const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/todos`);
     dispatch({
       type: GET_NOTES,
       payload: res.data,

@@ -44,7 +44,11 @@ const Notes = ({ notes: { notes, loading }, getNotes }) => {
         }}
       >
         {notes.map((item) => (
-          <NoteItem key={item.id} title={item.id} content={item.title} />
+          <NoteItem
+            key={item._id}
+            title={item.todoTitle}
+            content={item.todoContent}
+          />
         ))}
       </Grid>
     </Container>
