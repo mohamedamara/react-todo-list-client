@@ -36,7 +36,7 @@ const Notes = ({ notes: { notes, loading }, getNotes }) => {
         container
         direction="row"
         justify="flex-start"
-        alignItems="center"
+        alignItems="flex-start"
         spacing={6}
         style={{
           margin: 0,

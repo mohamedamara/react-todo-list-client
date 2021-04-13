@@ -1,4 +1,4 @@
-import { GET_NOTES, SET_LOADING } from "../actions/types";
+import { GET_NOTES, SET_LOADING, ADD_NOTE } from "../actions/types";
 
 const initialState = {
   notes: null,
@@ -13,6 +13,12 @@ const notesReducer = (state = initialState, action) => {
       return {
         ...state,
         notes: action.payload,
+        loading: false,
+      };
+    case ADD_NOTE:
+      return {
+        ...state,
+        notes: [action.payload, ...state.notes],
         loading: false,
       };
     case SET_LOADING:

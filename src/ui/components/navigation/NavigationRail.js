@@ -10,6 +10,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { navigationItems } from "./constants";
 import PropTypes from "prop-types";
 import { loadUser, logout } from "../../../store/actions/auth_action";
+import { addNote } from "../../../store/actions/notes_action";
+import AddNote from "../../components/AddNote";
 
 const useStyles = makeStyles((theme) => ({
   fab: {
@@ -34,18 +36,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NavigationRail = ({ auth: { user, loading }, loadUser, logout }) => {
+const NavigationRail = ({
+  auth: { user, loading },
+  loadUser,
+  logout,
+  addNote,
+}) => {
   const classes = useStyles();
 
   useEffect(() => {
-    // setTimeout(function () {
-    //   loadUser();
-    // }, 5000);
     loadUser();
     // eslint-disable-next-line
   }, []);
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [addNoteDialog, setAddNoteDialog] = useState(false);
 
   const [appBarTitle, setAppBarTitle] = useState("Notes");
   const handleDrawerToggle = () => setIsDrawerOpen(!isDrawerOpen);
@@ -75,7 +80,12 @@ const NavigationRail = ({ auth: { user, loading }, loadUser, logout }) => {
         appBarTitle={appBarTitle}
         handleDrawerToggle={handleDrawerToggle}
       />
-      <Fab color="secondary" aria-label="add" className={classes.fab}>
+      <Fab
+        onClick={() => setAddNoteDialog(true)}
+        color="secondary"
+        aria-label="add"
+        className={classes.fab}
+      >
         <AddIcon />
       </Fab>
       <CustomDrawer
@@ -94,18 +104,28 @@ const NavigationRail = ({ auth: { user, loading }, loadUser, logout }) => {
         navigationItems={navigationItems}
         setAppBarTitle={setAppBarTitle}
       />
+      <AddNote
+        isOpen={addNoteDialog}
+        close={() => setAddNoteDialog(false)}
+        addNote={addNote}
+      />
     </>
   );
 };
 
 NavigationRail.propTypes = {
   auth: PropTypes.object.isRequired,
+  notes: PropTypes.object.isRequired,
   loadUser: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
+  addNote: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  notes: state.notes,
 });
 
-export default connect(mapStateToProps, { loadUser, logout })(NavigationRail);
+export default connect(mapStateToProps, { loadUser, logout, addNote })(
+  NavigationRail
+);

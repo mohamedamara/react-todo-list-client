@@ -6,7 +6,8 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import DeleteIcon from "@material-ui/icons/Delete";
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import ColorLensOutlinedIcon from '@material-ui/icons/ColorLensOutlined';
 
 const useStyles = makeStyles({
   root: {
@@ -47,9 +48,23 @@ const NoteItem = (props) => {
       >
         <CardHeader
           action={
-            <IconButton aria-label="delete" className={classes.cardButton}>
-              <DeleteIcon />
-            </IconButton>
+            <Grid
+              container
+              direction="row"
+              justify="center"
+              alignItems="center"
+            >
+              <Grid item>
+                <IconButton aria-label="delete" className={classes.cardButton}>
+                  <ColorLensOutlinedIcon />
+                </IconButton>
+              </Grid>
+              <Grid item>
+                <IconButton aria-label="delete" className={classes.cardButton}>
+                  <DeleteOutlineIcon />
+                </IconButton>
+              </Grid>
+            </Grid>
           }
           title={props.title}
           subheader="13/04/2021"

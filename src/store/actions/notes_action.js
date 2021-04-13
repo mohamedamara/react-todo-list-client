@@ -1,7 +1,6 @@
 import axios from "axios";
-import { GET_NOTES, SET_LOADING } from "./types";
+import { GET_NOTES, ADD_NOTE, SET_LOADING } from "./types";
 
-//Get notes from server
 export const getNotes = () => async (dispatch) => {
   try {
     setLoading();
@@ -13,6 +12,31 @@ export const getNotes = () => async (dispatch) => {
     test();
   } catch (err) {
     console.log(err);
+    // dispatch({
+    //   type: LOGS_ERROR,
+    //   payload: err.response.statusText,
+    // });
+  }
+};
+
+export const addNote = (note) => async (dispatch) => {
+  try {
+    setLoading();
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await axios.post(
+      `${process.env.REACT_APP_API_BASE_URL}/todos`,
+      note,
+      config
+    );
+    dispatch({
+      type: ADD_NOTE,
+      payload: res.data,
+    });
+  } catch (err) {
     // dispatch({
     //   type: LOGS_ERROR,
     //   payload: err.response.statusText,
