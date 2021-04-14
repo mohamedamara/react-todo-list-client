@@ -67,9 +67,7 @@ const capitalizeFirstLetter = (text) => {
 
 const CustomDrawerBody = (props) => {
   const classes = useStyles();
-
   const [open, setOpen] = useState(false);
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -77,6 +75,7 @@ const CustomDrawerBody = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
+
   const handleLogoutAndClose = () => {
     props.logout();
     setOpen(false);
@@ -127,38 +126,33 @@ const CustomDrawerBody = (props) => {
       <Divider />
       <List className={classes.list}>
         {props.navigationItems.map((content) => (
-          <>
-            {content.title === "Settings" && (
-              <Divider className={classes.drawerItems} />
-            )}
-            <ListItem
-              className={clsx(classes.listItemHoverColor, {
-                [classes.drawerItems]: !content.permanent,
-                [classes.listItemColor]:
+          <ListItem
+            key={content.title}
+            className={clsx(classes.listItemHoverColor, {
+              [classes.drawerItems]: !content.permanent,
+              [classes.listItemColor]:
+                content.title === props.selectedNavigation,
+              [classes.listItemHoverColor]:
+                content.title !== props.selectedNavigation,
+            })}
+            button
+            onClick={() => {
+              props.setAppBarTitle(content.title);
+              props.handleSelectedChange(content.title);
+            }}
+            component={Link}
+            to={content.title.toLowerCase()}
+          >
+            <ListItemIcon
+              className={clsx({
+                [classes.listItemIconColor]:
                   content.title === props.selectedNavigation,
-                [classes.listItemHoverColor]:
-                  content.title !== props.selectedNavigation,
               })}
-              button
-              onClick={() => {
-                props.setAppBarTitle(content.title);
-                props.handleSelectedChange(content.title);
-              }}
-              key={content.title}
-              component={Link}
-              to={content.title.toLowerCase()}
             >
-              <ListItemIcon
-                className={clsx({
-                  [classes.listItemIconColor]:
-                    content.title === props.selectedNavigation,
-                })}
-              >
-                {content.icon}
-              </ListItemIcon>
-              <ListItemText primary={content.title} />
-            </ListItem>
-          </>
+              {content.icon}
+            </ListItemIcon>
+            <ListItemText primary={content.title} />
+          </ListItem>
         ))}
       </List>
       <Dialog

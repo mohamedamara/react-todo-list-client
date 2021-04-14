@@ -6,8 +6,8 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import ColorLensOutlinedIcon from '@material-ui/icons/ColorLensOutlined';
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import ColorLensOutlinedIcon from "@material-ui/icons/ColorLensOutlined";
 
 const useStyles = makeStyles({
   root: {
@@ -38,6 +38,14 @@ const NoteItem = (props) => {
   const classes = useStyles();
   const [cardElevation, setCardElevation] = useState(0);
 
+  const hanldeDelete = () => {
+    if (props.deleteNote === undefined) {
+      props.moveToTrash(props.todoId);
+    } else {
+      props.deleteNote(props.todoId);
+    }
+  };
+
   return (
     <Grid item xs={12} md={6} lg={4}>
       <Card
@@ -55,12 +63,16 @@ const NoteItem = (props) => {
               alignItems="center"
             >
               <Grid item>
-                <IconButton aria-label="delete" className={classes.cardButton}>
+                <IconButton aria-label="color" className={classes.cardButton}>
                   <ColorLensOutlinedIcon />
                 </IconButton>
               </Grid>
               <Grid item>
-                <IconButton aria-label="delete" className={classes.cardButton}>
+                <IconButton
+                  onClick={hanldeDelete}
+                  aria-label="delete"
+                  className={classes.cardButton}
+                >
                   <DeleteOutlineIcon />
                 </IconButton>
               </Grid>

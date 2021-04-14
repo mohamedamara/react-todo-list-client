@@ -1,5 +1,12 @@
 import axios from "axios";
-import { GET_NOTES, ADD_NOTE, SET_LOADING } from "./types";
+import {
+  GET_NOTES,
+  ADD_NOTE,
+  SET_LOADING,
+  DELETE_NOTE,
+  GET_NOTES_IN_TRASH,
+  MOVE_TO_TRASH,
+} from "./types";
 
 export const getNotes = () => async (dispatch) => {
   try {
@@ -9,7 +16,25 @@ export const getNotes = () => async (dispatch) => {
       type: GET_NOTES,
       payload: res.data,
     });
-    test();
+  } catch (err) {
+    console.log(err);
+    // dispatch({
+    //   type: LOGS_ERROR,
+    //   payload: err.response.statusText,
+    // });
+  }
+};
+
+export const getNotesInTrash = () => async (dispatch) => {
+  try {
+    setLoading();
+    const res = await axios.get(
+      `${process.env.REACT_APP_API_BASE_URL}/todos/yes`
+    );
+    dispatch({
+      type: GET_NOTES_IN_TRASH,
+      payload: res.data,
+    });
   } catch (err) {
     console.log(err);
     // dispatch({
@@ -40,6 +65,42 @@ export const addNote = (note) => async (dispatch) => {
     // dispatch({
     //   type: LOGS_ERROR,
     //   payload: err.response.statusText,
+    // });
+  }
+};
+
+export const moveToTrash = (noteId) => async (dispatch) => {
+  try {
+    setLoading();
+    await axios.delete(
+      `${process.env.REACT_APP_API_BASE_URL}/todos/${noteId}/yes`
+    );
+    dispatch({
+      type: MOVE_TO_TRASH,
+      payload: noteId,
+    });
+  } catch (err) {
+    // dispatch({
+    //   type: NOTE_ERROR,
+    //   payload: err.response.msg,
+    // });
+  }
+};
+
+export const deleteNote = (noteId) => async (dispatch) => {
+  try {
+    setLoading();
+    await axios.delete(
+      `${process.env.REACT_APP_API_BASE_URL}/todos/${noteId}/no`
+    );
+    dispatch({
+      type: DELETE_NOTE,
+      payload: noteId,
+    });
+  } catch (err) {
+    // dispatch({
+    //   type: NOTE_ERROR,
+    //   payload: err.response.msg,
     // });
   }
 };

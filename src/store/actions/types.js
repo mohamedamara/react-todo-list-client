@@ -1,4 +1,6 @@
 export const GET_NOTES = "GET_NOTES";
+export const GET_NOTES_IN_TRASH = "GET_NOTES_IN_TRASH";
+export const MOVE_TO_TRASH = "MOVE_TO_TRASH";
 export const ADD_NOTE = "ADD_NOTE";
 export const SET_LOADING = "SET_LOADING";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
