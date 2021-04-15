@@ -6,6 +6,9 @@ import {
   DELETE_NOTE,
   GET_NOTES_IN_TRASH,
   MOVE_TO_TRASH,
+  UPDATE_NOTE,
+  SET_CURRENT,
+  CLEAR_CURRENT,
 } from "./types";
 
 export const getNotes = () => async (dispatch) => {
@@ -69,6 +72,31 @@ export const addNote = (note) => async (dispatch) => {
   }
 };
 
+export const updateNote = (note) => async (dispatch) => {
+  try {
+    setLoading();
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await axios.put(
+      `${process.env.REACT_APP_API_BASE_URL}/todos/${note._id}`,
+      note,
+      config
+    );
+    dispatch({
+      type: UPDATE_NOTE,
+      payload: res.data,
+    });
+  } catch (err) {
+    // dispatch({
+    //   type: LOGS_ERROR,
+    //   payload: err.response.statusText,
+    // });
+  }
+};
+
 export const moveToTrash = (noteId) => async (dispatch) => {
   try {
     setLoading();
@@ -103,6 +131,19 @@ export const deleteNote = (noteId) => async (dispatch) => {
     //   payload: err.response.msg,
     // });
   }
+};
+
+export const setCurrent = (note) => {
+  return {
+    type: SET_CURRENT,
+    payload: note,
+  };
+};
+
+export const clearCurrent = () => {
+  return {
+    type: CLEAR_CURRENT,
+  };
 };
 
 export const setLoading = () => {

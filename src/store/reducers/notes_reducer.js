@@ -5,13 +5,16 @@ import {
   DELETE_NOTE,
   GET_NOTES_IN_TRASH,
   MOVE_TO_TRASH,
+  UPDATE_NOTE,
+  SET_CURRENT,
+  CLEAR_CURRENT,
 } from "../actions/types";
 
 const initialState = {
   notes: null,
-  // current: null,
+  current: null,
   loading: false,
-  // error: null,
+  error: null,
 };
 
 const notesReducer = (state = initialState, action) => {
@@ -34,10 +37,12 @@ const notesReducer = (state = initialState, action) => {
         notes: [action.payload, ...state.notes],
         loading: false,
       };
-    case DELETE_NOTE:
+    case UPDATE_NOTE:
       return {
         ...state,
-        notes: state.notes.filter((note) => note._id !== action.payload),
+        notes: state.notes.map((note) =>
+          note._id === action.payload._id ? action.payload : note
+        ),
         loading: false,
       };
     case MOVE_TO_TRASH:
@@ -45,6 +50,22 @@ const notesReducer = (state = initialState, action) => {
         ...state,
         notes: state.notes.filter((note) => note._id !== action.payload),
         loading: false,
+      };
+    case DELETE_NOTE:
+      return {
+        ...state,
+        notes: state.notes.filter((note) => note._id !== action.payload),
+        loading: false,
+      };
+    case SET_CURRENT:
+      return {
+        ...state,
+        current: action.payload,
+      };
+    case CLEAR_CURRENT:
+      return {
+        ...state,
+        current: null,
       };
     case SET_LOADING:
       return {

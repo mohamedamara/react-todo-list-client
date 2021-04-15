@@ -3,11 +3,27 @@ import { connect } from "react-redux";
 import NoteItem from "../components/NoteItem";
 import Container from "../components/Container";
 import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import PropTypes from "prop-types";
 import { getNotesInTrash, deleteNote } from "../../store/actions/notes_action";
+import { makeStyles } from "@material-ui/core/styles";
+import DeleteIcon from '@material-ui/icons/Delete';
+
+const useStyles = makeStyles((theme) => ({
+  largeIcon: {
+    fontSize: "12em",
+    color: "#80868b7a",
+    marginBottom: "15px",
+  },
+  textStyle: {
+    color: "#80868b",
+  },
+}));
 
 const Trash = ({ notes: { notes, loading }, getNotesInTrash, deleteNote }) => {
+  const classes = useStyles();
+
   useEffect(() => {
     getNotesInTrash();
     // eslint-disable-next-line
@@ -30,6 +46,32 @@ const Trash = ({ notes: { notes, loading }, getNotesInTrash, deleteNote }) => {
       </Container>
     );
   }
+
+  if (!loading && notes.length === 0 && notes !== null) {
+    return (
+      <Container>
+        <Grid container direction="column" justify="center" alignItems="center">
+          <Grid item>
+            <div
+              style={{
+                height: "calc(100vh - 250px)",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <DeleteIcon className={classes.largeIcon} />
+              <Typography variant="h5" className={classes.textStyle}>
+                No Notes in Trash
+              </Typography>
+            </div>
+          </Grid>
+        </Grid>
+      </Container>
+    );
+  }
+
   return (
     <Container>
       <Grid
