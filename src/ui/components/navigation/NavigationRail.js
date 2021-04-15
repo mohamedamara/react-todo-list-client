@@ -12,6 +12,7 @@ import PropTypes from "prop-types";
 import { loadUser, logout } from "../../../store/actions/auth_action";
 import { addNote } from "../../../store/actions/notes_action";
 import AddNote from "../../components/AddNote";
+import { useLocation } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   fab: {
@@ -49,13 +50,24 @@ const NavigationRail = ({
     // eslint-disable-next-line
   }, []);
 
+  const capitalizeFirstLetter = (text) => {
+    if (text === "") return "Notes";
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  };
+
+  const location = useLocation();
+  const currentRoute = location.pathname.substring(1);
+  const currentNavigationNalue = capitalizeFirstLetter(currentRoute);
+
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [addNoteDialog, setAddNoteDialog] = useState(false);
 
-  const [appBarTitle, setAppBarTitle] = useState("Notes");
+  const [appBarTitle, setAppBarTitle] = useState(currentNavigationNalue);
   const handleDrawerToggle = () => setIsDrawerOpen(!isDrawerOpen);
 
-  const [selectedNavigation, setSelectedNavigation] = useState("Notes");
+  const [selectedNavigation, setSelectedNavigation] = useState(
+    currentNavigationNalue
+  );
   const handleSelectedChange = (newValue) => setSelectedNavigation(newValue);
 
   if (loading || user === null) {
