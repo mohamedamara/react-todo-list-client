@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1, 0, 0, 2.5),
     color: theme.palette.getContrastText(deepOrange[500]),
     backgroundColor: deepOrange[500],
+    "&:hover": {
+      cursor: "pointer",
+    },
   },
   drawerHeaderTitle: {
     fontWeight: "bold",
@@ -90,38 +93,25 @@ const CustomDrawerBody = (props) => {
         alignItems="flex-start"
         className={classes.drawerHeader}
       >
-        <Avatar className={classes.drawerHeaderImage}>
+        <Avatar onClick={handleClickOpen} className={classes.drawerHeaderImage}>
           {props.user.firstName.charAt(0).toUpperCase()}
         </Avatar>
-        <Grid container direction="row" justify="center" alignItems="center">
-          <Grid item xs={9}>
-            <Typography
-              variant="subtitle2"
-              noWrap
-              className={classes.drawerHeaderTitle}
-            >
-              {capitalizeFirstLetter(props.user.firstName) +
-                " " +
-                capitalizeFirstLetter(props.user.lastName)}
-            </Typography>
-            <Typography
-              variant="caption"
-              noWrap
-              className={classes.drawerHeaderSubtitle}
-            >
-              {props.user.email}
-            </Typography>
-          </Grid>
-          <Grid item xs={3}>
-            <IconButton
-              aria-label="logout"
-              className={classes.logoutButton}
-              onClick={handleClickOpen}
-            >
-              <PowerSettingsNewIcon />
-            </IconButton>
-          </Grid>
-        </Grid>
+        <Typography
+          variant="subtitle2"
+          noWrap
+          className={classes.drawerHeaderTitle}
+        >
+          {capitalizeFirstLetter(props.user.firstName) +
+            " " +
+            capitalizeFirstLetter(props.user.lastName)}
+        </Typography>
+        <Typography
+          variant="caption"
+          noWrap
+          className={classes.drawerHeaderSubtitle}
+        >
+          {props.user.email}
+        </Typography>
       </Grid>
       <Divider />
       <List className={classes.list}>
