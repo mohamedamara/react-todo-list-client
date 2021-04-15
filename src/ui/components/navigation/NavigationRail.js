@@ -92,14 +92,16 @@ const NavigationRail = ({
         appBarTitle={appBarTitle}
         handleDrawerToggle={handleDrawerToggle}
       />
-      <Fab
-        onClick={() => setAddNoteDialog(true)}
-        color="secondary"
-        aria-label="add"
-        className={classes.fab}
-      >
-        <AddIcon />
-      </Fab>
+      {(location.pathname === "/notes" || location.pathname === "/") && (
+        <Fab
+          onClick={() => setAddNoteDialog(true)}
+          color="secondary"
+          aria-label="add"
+          className={classes.fab}
+        >
+          <AddIcon />
+        </Fab>
+      )}
       <CustomDrawer
         handleDrawerToggle={handleDrawerToggle}
         isDrawerOpen={isDrawerOpen}
