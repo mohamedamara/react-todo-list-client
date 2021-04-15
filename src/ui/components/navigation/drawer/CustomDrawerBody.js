@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import { deepOrange } from "@material-ui/core/colors";
 import Avatar from "@material-ui/core/Avatar";
 import List from "@material-ui/core/List";
