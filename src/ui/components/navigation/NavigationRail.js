@@ -12,6 +12,7 @@ import PropTypes from "prop-types";
 import { loadUser, logout } from "../../../store/actions/auth_action";
 import { addNote } from "../../../store/actions/notes_action";
 import AddNote from "../../components/AddNote";
+import Fade from "@material-ui/core/Fade";
 import { useLocation } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -59,6 +60,10 @@ const NavigationRail = ({
   const currentRoute = location.pathname.substring(1);
   const currentNavigationNalue = capitalizeFirstLetter(currentRoute);
 
+  const showFab = () => {
+    return location.pathname === "/notes" || location.pathname === "/";
+  };
+
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [addNoteDialog, setAddNoteDialog] = useState(false);
 
@@ -92,7 +97,7 @@ const NavigationRail = ({
         appBarTitle={appBarTitle}
         handleDrawerToggle={handleDrawerToggle}
       />
-      {(location.pathname === "/notes" || location.pathname === "/") && (
+      <Fade in={showFab()} timeout={200}>
         <Fab
           onClick={() => setAddNoteDialog(true)}
           color="secondary"
@@ -101,7 +106,7 @@ const NavigationRail = ({
         >
           <AddIcon />
         </Fab>
-      )}
+      </Fade>
       <CustomDrawer
         handleDrawerToggle={handleDrawerToggle}
         isDrawerOpen={isDrawerOpen}
@@ -117,6 +122,7 @@ const NavigationRail = ({
         handleSelectedChange={handleSelectedChange}
         navigationItems={navigationItems}
         setAppBarTitle={setAppBarTitle}
+        showFab={showFab}
       />
       <AddNote
         isOpen={addNoteDialog}

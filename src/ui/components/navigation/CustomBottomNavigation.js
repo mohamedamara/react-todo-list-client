@@ -6,6 +6,7 @@ import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import grey from "@material-ui/core/colors/grey";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
+import clsx from "clsx";
 
 const useStyles = makeStyles((theme) => ({
   bottomNavigation: {
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
       position: "fixed",
       top: "0px",
       left: "0px",
+      transition: "min-height 0.5s ease",
     },
   },
   divider: {
@@ -31,6 +33,12 @@ const useStyles = makeStyles((theme) => ({
       position: "fixed",
       top: "0px",
       left: "96px",
+    },
+  },
+  removeFab: {
+    [theme.breakpoints.only("md")]: {
+      minHeight: "300px",
+      transition: "min-height 0.5s ease",
     },
   },
 }));
@@ -64,7 +72,9 @@ const CustomBottomNavigation = (props) => {
     <Hidden lgUp implementation="css">
       <div>
         <BottomNavigation
-          className={classes.bottomNavigation}
+          className={clsx(classes.bottomNavigation, {
+            [classes.removeFab]: !props.showFab(),
+          })}
           value={props.selectedNavigation}
           showLabels
           onChange={(event, newValue) => {
