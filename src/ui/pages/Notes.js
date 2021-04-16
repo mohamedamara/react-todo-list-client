@@ -6,7 +6,11 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import PropTypes from "prop-types";
-import { getNotes, moveToTrash } from "../../store/actions/notes_action";
+import {
+  getNotes,
+  moveToTrash,
+  updateNote,
+} from "../../store/actions/notes_action";
 import { makeStyles } from "@material-ui/core/styles";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 
@@ -14,14 +18,19 @@ const useStyles = makeStyles((theme) => ({
   largeIcon: {
     fontSize: "12em",
     color: "#80868b7a",
-    marginBottom: "15px"
+    marginBottom: "15px",
   },
   textStyle: {
     color: "#80868b",
   },
 }));
 
-const Notes = ({ notes: { notes, loading }, getNotes, moveToTrash }) => {
+const Notes = ({
+  notes: { notes, loading },
+  getNotes,
+  moveToTrash,
+  updateNote,
+}) => {
   const classes = useStyles();
 
   useEffect(() => {
@@ -90,7 +99,9 @@ const Notes = ({ notes: { notes, loading }, getNotes, moveToTrash }) => {
             title={item.todoTitle}
             content={item.todoContent}
             todoId={item._id}
+            color={item.todoColor}
             moveToTrash={moveToTrash}
+            updateNote={updateNote}
           />
         ))}
       </Grid>
@@ -102,10 +113,13 @@ Notes.propTypes = {
   notes: PropTypes.object.isRequired,
   getNotes: PropTypes.func.isRequired,
   moveToTrash: PropTypes.func.isRequired,
+  updateNote: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   notes: state.notes,
 });
 
-export default connect(mapStateToProps, { getNotes, moveToTrash })(Notes);
+export default connect(mapStateToProps, { getNotes, moveToTrash, updateNote })(
+  Notes
+);

@@ -7,6 +7,7 @@ import CardContent from "@material-ui/core/CardContent";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import AddOrModifyNote from "./AddOrModifyNote";
 
 const useStyles = makeStyles({
   root: {
@@ -37,8 +38,10 @@ const useStyles = makeStyles({
 const NoteItem = (props) => {
   const classes = useStyles();
   const [cardElevation, setCardElevation] = useState(0);
+  const [addNoteDialog, setAddNoteDialog] = useState(false);
 
-  const hanldeDelete = () => {
+  const hanldeDelete = (event) => {
+    event.stopPropagation();
     if (props.deleteNote === undefined) {
       props.moveToTrash(props.todoId);
     } else {
@@ -47,12 +50,14 @@ const NoteItem = (props) => {
   };
 
   return (
-    <Grid item xs={12} md={6} lg={4}>
+    <Grid item xs={12} sm={6} md={4} lg={3}>
       <Card
         classes={{ root: classes.root }}
         elevation={cardElevation}
         onMouseOver={() => setCardElevation(4)}
         onMouseOut={() => setCardElevation(0)}
+        onClick={() => setAddNoteDialog(true)}
+        style={{ backgroundColor: props.color }}
       >
         <CardHeader
           action={
@@ -73,6 +78,16 @@ const NoteItem = (props) => {
           </Typography>
         </CardContent>
       </Card>
+      <AddOrModifyNote
+        isOpen={addNoteDialog}
+        close={() => setAddNoteDialog(false)}
+        isUpdate={true}
+        todoId={props.todoId}
+        title={props.title}
+        content={props.content}
+        updateNote={props.updateNote}
+        color={props.color}
+      />
     </Grid>
   );
 };

@@ -91,6 +91,7 @@ const Trash = ({ notes: { trash, loading }, getNotesInTrash, deleteNote }) => {
             title={item.todoTitle}
             content={item.todoContent}
             todoId={item._id}
+            color={item.todoColor}
             deleteNote={deleteNote}
           />
         ))}

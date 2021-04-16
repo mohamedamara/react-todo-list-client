@@ -11,7 +11,7 @@ import { navigationItems } from "./constants";
 import PropTypes from "prop-types";
 import { loadUser, logout } from "../../../store/actions/auth_action";
 import { addNote } from "../../../store/actions/notes_action";
-import AddNote from "../../components/AddNote";
+import AddOrModifyNote from "../AddOrModifyNote";
 import Fade from "@material-ui/core/Fade";
 import { useLocation } from "react-router-dom";
 
@@ -124,7 +124,7 @@ const NavigationRail = ({
         setAppBarTitle={setAppBarTitle}
         showFab={showFab}
       />
-      <AddNote
+      <AddOrModifyNote
         isOpen={addNoteDialog}
         close={() => setAddNoteDialog(false)}
         addNote={addNote}
