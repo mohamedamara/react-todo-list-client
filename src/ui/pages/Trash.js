@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Trash = ({ notes: { notes, loading }, getNotesInTrash, deleteNote }) => {
+const Trash = ({ notes: { trash, loading }, getNotesInTrash, deleteNote }) => {
   const classes = useStyles();
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const Trash = ({ notes: { notes, loading }, getNotesInTrash, deleteNote }) => {
     // eslint-disable-next-line
   }, []);
 
-  if (loading || notes === null) {
+  if (loading || trash === null) {
     return (
       <Container>
         <div
@@ -47,7 +47,7 @@ const Trash = ({ notes: { notes, loading }, getNotesInTrash, deleteNote }) => {
     );
   }
 
-  if (!loading && notes.length === 0 && notes !== null) {
+  if (!loading && trash.length === 0 && trash !== null) {
     return (
       <Container>
         <Grid container direction="column" justify="center" alignItems="center">
@@ -85,7 +85,7 @@ const Trash = ({ notes: { notes, loading }, getNotesInTrash, deleteNote }) => {
           width: "100%",
         }}
       >
-        {notes.map((item) => (
+        {trash.map((item) => (
           <NoteItem
             key={item._id}
             title={item.todoTitle}

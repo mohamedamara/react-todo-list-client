@@ -12,6 +12,7 @@ import {
 
 const initialState = {
   notes: null,
+  trash: null,
   current: null,
   loading: false,
   error: null,
@@ -28,7 +29,7 @@ const notesReducer = (state = initialState, action) => {
     case GET_NOTES_IN_TRASH:
       return {
         ...state,
-        notes: action.payload,
+        trash: action.payload,
         loading: false,
       };
     case ADD_NOTE:
@@ -54,7 +55,7 @@ const notesReducer = (state = initialState, action) => {
     case DELETE_NOTE:
       return {
         ...state,
-        notes: state.notes.filter((note) => note._id !== action.payload),
+        trash: state.trash.filter((note) => note._id !== action.payload),
         loading: false,
       };
     case SET_CURRENT:
