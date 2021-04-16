@@ -7,7 +7,6 @@ import CardContent from "@material-ui/core/CardContent";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
-import ColorLensOutlinedIcon from "@material-ui/icons/ColorLensOutlined";
 
 const useStyles = makeStyles({
   root: {
@@ -15,6 +14,7 @@ const useStyles = makeStyles({
     borderRadius: "12px",
     border: "1px solid #e0e0e0",
     "&:hover": {
+      cursor: "pointer",
       "& $cardButton": {
         visibility: "visible",
         opacity: "1",
@@ -51,32 +51,18 @@ const NoteItem = (props) => {
       <Card
         classes={{ root: classes.root }}
         elevation={cardElevation}
-        onMouseOver={() => setCardElevation(2)}
+        onMouseOver={() => setCardElevation(4)}
         onMouseOut={() => setCardElevation(0)}
       >
         <CardHeader
           action={
-            <Grid
-              container
-              direction="row"
-              justify="center"
-              alignItems="center"
+            <IconButton
+              onClick={hanldeDelete}
+              aria-label="delete"
+              className={classes.cardButton}
             >
-              <Grid item>
-                <IconButton aria-label="color" className={classes.cardButton}>
-                  <ColorLensOutlinedIcon />
-                </IconButton>
-              </Grid>
-              <Grid item>
-                <IconButton
-                  onClick={hanldeDelete}
-                  aria-label="delete"
-                  className={classes.cardButton}
-                >
-                  <DeleteOutlineIcon />
-                </IconButton>
-              </Grid>
-            </Grid>
+              <DeleteOutlineIcon />
+            </IconButton>
           }
           title={props.title}
           subheader="13/04/2021"
