@@ -74,7 +74,7 @@ const Trash = ({
             >
               <DeleteIcon className={classes.largeIcon} />
               <Typography variant="h5" className={classes.textStyle}>
-                No Notes in Trash
+                No notes in Trash
               </Typography>
             </div>
           </Grid>

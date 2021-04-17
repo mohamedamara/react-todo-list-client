@@ -75,7 +75,7 @@ const Notes = ({
             >
               <AssignmentIcon className={classes.largeIcon} />
               <Typography variant="h5" className={classes.textStyle}>
-                No Notes found
+                No notes found
               </Typography>
             </div>
           </Grid>
