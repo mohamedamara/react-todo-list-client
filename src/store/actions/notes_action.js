@@ -7,8 +7,7 @@ import {
   GET_NOTES_IN_TRASH,
   MOVE_TO_TRASH,
   UPDATE_NOTE,
-  SET_CURRENT,
-  CLEAR_CURRENT,
+  RESTORE_NOTE,
 } from "./types";
 
 export const getNotes = () => async (dispatch) => {
@@ -31,9 +30,7 @@ export const getNotes = () => async (dispatch) => {
 export const getNotesInTrash = () => async (dispatch) => {
   try {
     setLoading();
-    const res = await axios.get(
-      `${process.env.REACT_APP_API_BASE_URL}/todos/yes`
-    );
+    const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/todos`);
     dispatch({
       type: GET_NOTES_IN_TRASH,
       payload: res.data,
@@ -97,20 +94,52 @@ export const updateNote = (note) => async (dispatch) => {
   }
 };
 
-export const moveToTrash = (noteId) => async (dispatch) => {
+export const moveToTrash = (note) => async (dispatch) => {
   try {
     setLoading();
-    await axios.delete(
-      `${process.env.REACT_APP_API_BASE_URL}/todos/${noteId}/yes`
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    await axios.put(
+      `${process.env.REACT_APP_API_BASE_URL}/todos/${note._id}`,
+      note,
+      config
     );
     dispatch({
       type: MOVE_TO_TRASH,
-      payload: noteId,
+      payload: note._id,
     });
   } catch (err) {
     // dispatch({
-    //   type: NOTE_ERROR,
-    //   payload: err.response.msg,
+    //   type: LOGS_ERROR,
+    //   payload: err.response.statusText,
+    // });
+  }
+};
+
+export const restoreNote = (note) => async (dispatch) => {
+  try {
+    setLoading();
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    await axios.put(
+      `${process.env.REACT_APP_API_BASE_URL}/todos/${note._id}`,
+      note,
+      config
+    );
+    dispatch({
+      type: RESTORE_NOTE,
+      payload: note._id,
+    });
+  } catch (err) {
+    // dispatch({
+    //   type: LOGS_ERROR,
+    //   payload: err.response.statusText,
     // });
   }
 };
@@ -118,9 +147,7 @@ export const moveToTrash = (noteId) => async (dispatch) => {
 export const deleteNote = (noteId) => async (dispatch) => {
   try {
     setLoading();
-    await axios.delete(
-      `${process.env.REACT_APP_API_BASE_URL}/todos/${noteId}/no`
-    );
+    await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/todos/${noteId}`);
     dispatch({
       type: DELETE_NOTE,
       payload: noteId,
@@ -131,19 +158,6 @@ export const deleteNote = (noteId) => async (dispatch) => {
     //   payload: err.response.msg,
     // });
   }
-};
-
-export const setCurrent = (note) => {
-  return {
-    type: SET_CURRENT,
-    payload: note,
-  };
-};
-
-export const clearCurrent = () => {
-  return {
-    type: CLEAR_CURRENT,
-  };
 };
 
 export const setLoading = () => {

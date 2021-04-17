@@ -52,11 +52,29 @@ const NoteItem = (props) => {
 
   const hanldeDelete = (event) => {
     event.stopPropagation();
-    if (props.deleteNote === undefined) {
-      props.moveToTrash(props.todoId);
-    } else {
+    if (props.isTrash) {
       props.deleteNote(props.todoId);
+    } else {
+      const updatedTodo = {
+        _id: props.todoId,
+        todoTitle: props.title,
+        todoContent: props.content,
+        keepInTrash: true,
+      };
+      props.moveToTrash(updatedTodo);
     }
+  };
+
+  const hanldeRestore = (event) => {
+    event.stopPropagation();
+    const updatedTodo = {
+      _id: props.todoId,
+      todoTitle: props.title,
+      todoContent: props.content,
+      todoColor: props.color,
+      keepInTrash: false,
+    };
+    props.restoreNote(updatedTodo);
   };
 
   const cardClickHandler = () => {
@@ -93,6 +111,7 @@ const NoteItem = (props) => {
                 <Grid item>
                   <Tooltip title="Restore">
                     <IconButton
+                      onClick={hanldeRestore}
                       aria-label="restore"
                       className={classes.cardButton}
                     >

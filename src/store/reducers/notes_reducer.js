@@ -6,8 +6,7 @@ import {
   GET_NOTES_IN_TRASH,
   MOVE_TO_TRASH,
   UPDATE_NOTE,
-  SET_CURRENT,
-  CLEAR_CURRENT,
+  RESTORE_NOTE,
 } from "../actions/types";
 
 const initialState = {
@@ -23,13 +22,13 @@ const notesReducer = (state = initialState, action) => {
     case GET_NOTES:
       return {
         ...state,
-        notes: action.payload,
+        notes: action.payload.filter((note) => note.keepInTrash === false),
         loading: false,
       };
     case GET_NOTES_IN_TRASH:
       return {
         ...state,
-        trash: action.payload,
+        trash: action.payload.filter((note) => note.keepInTrash === true),
         loading: false,
       };
     case ADD_NOTE:
@@ -46,6 +45,12 @@ const notesReducer = (state = initialState, action) => {
         ),
         loading: false,
       };
+    case RESTORE_NOTE:
+      return {
+        ...state,
+        trash: state.trash.filter((note) => note._id !== action.payload),
+        loading: false,
+      };
     case MOVE_TO_TRASH:
       return {
         ...state,
@@ -57,16 +62,6 @@ const notesReducer = (state = initialState, action) => {
         ...state,
         trash: state.trash.filter((note) => note._id !== action.payload),
         loading: false,
-      };
-    case SET_CURRENT:
-      return {
-        ...state,
-        current: action.payload,
-      };
-    case CLEAR_CURRENT:
-      return {
-        ...state,
-        current: null,
       };
     case SET_LOADING:
       return {

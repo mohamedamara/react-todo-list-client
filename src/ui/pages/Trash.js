@@ -6,7 +6,11 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import PropTypes from "prop-types";
-import { getNotesInTrash, deleteNote } from "../../store/actions/notes_action";
+import {
+  getNotesInTrash,
+  deleteNote,
+  restoreNote,
+} from "../../store/actions/notes_action";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Masonry from "react-masonry-css";
@@ -22,7 +26,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Trash = ({ notes: { trash, loading }, getNotesInTrash, deleteNote }) => {
+const Trash = ({
+  notes: { trash, loading },
+  getNotesInTrash,
+  deleteNote,
+  restoreNote,
+}) => {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -98,6 +107,7 @@ const Trash = ({ notes: { trash, loading }, getNotesInTrash, deleteNote }) => {
               todoId={item._id}
               color={item.todoColor}
               deleteNote={deleteNote}
+              restoreNote={restoreNote}
               isTrash={true}
             />
           </div>
@@ -111,10 +121,15 @@ Trash.propTypes = {
   notes: PropTypes.object.isRequired,
   getNotesInTrash: PropTypes.func.isRequired,
   deleteNote: PropTypes.func.isRequired,
+  restoreNote: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   notes: state.notes,
 });
 
-export default connect(mapStateToProps, { getNotesInTrash, deleteNote })(Trash);
+export default connect(mapStateToProps, {
+  getNotesInTrash,
+  deleteNote,
+  restoreNote,
+})(Trash);

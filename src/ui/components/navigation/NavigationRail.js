@@ -132,6 +132,7 @@ const NavigationRail = ({
         isOpen={addNoteDialog}
         close={() => setAddNoteDialog(false)}
         addNote={addNote}
+        color={"#fff"}
       />
     </>
   );
