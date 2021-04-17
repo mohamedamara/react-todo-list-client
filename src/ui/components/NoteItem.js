@@ -12,7 +12,7 @@ import CustomSnackbar from "./CustomSnackbar";
 import RestoreFromTrashOutlinedIcon from "@material-ui/icons/RestoreFromTrashOutlined";
 import Tooltip from "@material-ui/core/Tooltip";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     // minWidth: 275,
     borderRadius: "12px",
@@ -22,6 +22,7 @@ const useStyles = makeStyles({
       "& $cardButton": {
         visibility: "visible",
         opacity: "1",
+        transition: "visibility 0.3s linear,opacity 0.3s linear",
       },
     },
   },
@@ -29,6 +30,11 @@ const useStyles = makeStyles({
     visibility: "hidden",
     opacity: "0",
     transition: "visibility 0.3s linear,opacity 0.3s linear",
+    [theme.breakpoints.down("sm")]: {
+      visibility: "visible",
+      opacity: "1",
+      transition: "visibility 0.3s linear,opacity 0.3s linear",
+    },
   },
   title: {
     fontSize: 14,
@@ -36,7 +42,7 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 8,
   },
-});
+}));
 
 const NoteItem = (props) => {
   const classes = useStyles();
