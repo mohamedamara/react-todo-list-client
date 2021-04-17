@@ -14,6 +14,8 @@ import { addNote } from "../../../store/actions/notes_action";
 import AddOrModifyNote from "../AddOrModifyNote";
 import Fade from "@material-ui/core/Fade";
 import { useLocation } from "react-router-dom";
+import Tooltip from "@material-ui/core/Tooltip";
+
 
 const useStyles = makeStyles((theme) => ({
   fab: {
@@ -98,14 +100,16 @@ const NavigationRail = ({
         handleDrawerToggle={handleDrawerToggle}
       />
       <Fade in={showFab()} timeout={200}>
-        <Fab
-          onClick={() => setAddNoteDialog(true)}
-          color="secondary"
-          aria-label="add"
-          className={classes.fab}
-        >
-          <AddIcon />
-        </Fab>
+        <Tooltip title="Add new note">
+          <Fab
+            onClick={() => setAddNoteDialog(true)}
+            color="secondary"
+            aria-label="add"
+            className={classes.fab}
+          >
+            <AddIcon />
+          </Fab>
+        </Tooltip>
       </Fade>
       <CustomDrawer
         handleDrawerToggle={handleDrawerToggle}

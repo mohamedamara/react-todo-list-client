@@ -17,6 +17,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const useStyles = makeStyles((theme) => ({
   drawerHeader: {
@@ -91,9 +92,14 @@ const CustomDrawerBody = (props) => {
         alignItems="flex-start"
         className={classes.drawerHeader}
       >
-        <Avatar onClick={handleClickOpen} className={classes.drawerHeaderImage}>
-          {props.user.firstName.charAt(0).toUpperCase()}
-        </Avatar>
+        <Tooltip title="Logout">
+          <Avatar
+            onClick={handleClickOpen}
+            className={classes.drawerHeaderImage}
+          >
+            {props.user.firstName.charAt(0).toUpperCase()}
+          </Avatar>
+        </Tooltip>
         <Typography
           variant="subtitle2"
           noWrap

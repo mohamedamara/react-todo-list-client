@@ -4,10 +4,13 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import IconButton from "@material-ui/core/IconButton";
+import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import AddOrModifyNote from "./AddOrModifyNote";
 import CustomSnackbar from "./CustomSnackbar";
+import RestoreFromTrashOutlinedIcon from "@material-ui/icons/RestoreFromTrashOutlined";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const useStyles = makeStyles({
   root: {
@@ -74,13 +77,36 @@ const NoteItem = (props) => {
       >
         <CardHeader
           action={
-            <IconButton
-              onClick={hanldeDelete}
-              aria-label="delete"
-              className={classes.cardButton}
+            <Grid
+              container
+              direction="row"
+              justify="center"
+              alignItems="center"
             >
-              <DeleteOutlineIcon />
-            </IconButton>
+              {props.isTrash && (
+                <Grid item>
+                  <Tooltip title="Restore">
+                    <IconButton
+                      aria-label="restore"
+                      className={classes.cardButton}
+                    >
+                      <RestoreFromTrashOutlinedIcon />
+                    </IconButton>
+                  </Tooltip>
+                </Grid>
+              )}
+              <Grid item>
+                <Tooltip title={props.isTrash ? "Delete forever" : "Delete"}>
+                  <IconButton
+                    onClick={hanldeDelete}
+                    aria-label="delete"
+                    className={classes.cardButton}
+                  >
+                    <DeleteOutlineIcon />
+                  </IconButton>
+                </Tooltip>
+              </Grid>
+            </Grid>
           }
           title={props.title}
           subheader="13/04/2021"
