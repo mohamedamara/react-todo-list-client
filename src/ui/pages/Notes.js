@@ -6,12 +6,14 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import PropTypes from "prop-types";
+import Masonry from "react-masonry-css";
+
 import {
   getNotes,
   moveToTrash,
   updateNote,
 } from "../../store/actions/notes_action";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 
 const useStyles = makeStyles((theme) => ({
@@ -32,6 +34,7 @@ const Notes = ({
   updateNote,
 }) => {
   const classes = useStyles();
+  const theme = useTheme();
 
   useEffect(() => {
     getNotes();
@@ -80,31 +83,36 @@ const Notes = ({
       </Container>
     );
   }
+
+  const breakpointCols = {
+    default: 4,
+    [theme.breakpoints.values.xl]: 3,
+    [theme.breakpoints.values.lg]: 3,
+    [theme.breakpoints.values.md]: 2,
+    [theme.breakpoints.values.sm]: 1,
+    [theme.breakpoints.values.xs]: 1,
+  };
+
   return (
     <Container>
-      <Grid
-        container
-        direction="row"
-        justify="flex-start"
-        alignItems="flex-start"
-        spacing={6}
-        style={{
-          margin: 0,
-          width: "100%",
-        }}
+      <Masonry
+        breakpointCols={breakpointCols}
+        className="my-masonry-grid"
+        columnClassName="my-masonry-grid_column"
       >
         {notes.map((item) => (
-          <NoteItem
-            key={item._id}
-            title={item.todoTitle}
-            content={item.todoContent}
-            todoId={item._id}
-            color={item.todoColor}
-            moveToTrash={moveToTrash}
-            updateNote={updateNote}
-          />
+          <div key={item._id}>
+            <NoteItem
+              title={item.todoTitle}
+              content={item.todoContent}
+              todoId={item._id}
+              color={item.todoColor}
+              moveToTrash={moveToTrash}
+              updateNote={updateNote}
+            />
+          </div>
         ))}
-      </Grid>
+      </Masonry>
     </Container>
   );
 };

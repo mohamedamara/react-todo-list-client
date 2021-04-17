@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import Grid from "@material-ui/core/Grid";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import IconButton from "@material-ui/core/IconButton";
@@ -64,7 +63,7 @@ const NoteItem = (props) => {
   };
 
   return (
-    <Grid item xs={12} sm={6} md={4} lg={3}>
+    <>
       <Card
         classes={{ root: classes.root }}
         elevation={cardElevation}
@@ -103,7 +102,7 @@ const NoteItem = (props) => {
         color={props.color}
       />
       <CustomSnackbar snackPack={snackPack} setSnackPack={setSnackPack} />
-    </Grid>
+    </>
   );
 };
 
