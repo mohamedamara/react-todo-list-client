@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -29,12 +29,6 @@ const validationSchema = yup.object({
 
 const AddOrModifyNote = (props) => {
   const [selectedColor, SetSelectedColor] = useState(props.color);
-  useEffect(() => {
-    if (!props.isUpdate) {
-      SetSelectedColor("#fff");
-    }
-    // eslint-disable-next-line
-  }, []);
 
   const dialogCloseAction = () => {
     SetSelectedColor(props.color);
@@ -54,11 +48,12 @@ const AddOrModifyNote = (props) => {
         values._id = props.todoId;
         values.todoColor = selectedColor;
         props.updateNote(values);
+        handleSave();
       } else {
         values.todoColor = selectedColor;
         props.addNote(values);
+        handleClose();
       }
-      handleClose();
     },
   });
 
@@ -66,6 +61,10 @@ const AddOrModifyNote = (props) => {
     props.close();
     formik.resetForm();
     SetSelectedColor(props.color);
+  };
+  const handleSave = () => {
+    props.close();
+    formik.resetForm();
   };
 
   return (
