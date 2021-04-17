@@ -93,6 +93,7 @@ const Trash = ({ notes: { trash, loading }, getNotesInTrash, deleteNote }) => {
             todoId={item._id}
             color={item.todoColor}
             deleteNote={deleteNote}
+            isTrash={true}
           />
         ))}
       </Grid>

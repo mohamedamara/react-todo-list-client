@@ -8,6 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import AddOrModifyNote from "./AddOrModifyNote";
+import CustomSnackbar from "./CustomSnackbar";
 
 const useStyles = makeStyles({
   root: {
@@ -39,6 +40,7 @@ const NoteItem = (props) => {
   const classes = useStyles();
   const [cardElevation, setCardElevation] = useState(0);
   const [addNoteDialog, setAddNoteDialog] = useState(false);
+  const [snackPack, setSnackPack] = useState([]);
 
   const hanldeDelete = (event) => {
     event.stopPropagation();
@@ -49,6 +51,18 @@ const NoteItem = (props) => {
     }
   };
 
+  const cardClickHandler = () => {
+    if (props.isTrash) {
+      showSnackbar("Can't edit in Trash");
+    } else {
+      setAddNoteDialog(true);
+    }
+  };
+
+  const showSnackbar = (message) => {
+    setSnackPack((prev) => [...prev, { message, key: new Date().getTime() }]);
+  };
+
   return (
     <Grid item xs={12} sm={6} md={4} lg={3}>
       <Card
@@ -56,7 +70,7 @@ const NoteItem = (props) => {
         elevation={cardElevation}
         onMouseOver={() => setCardElevation(4)}
         onMouseOut={() => setCardElevation(0)}
-        onClick={() => setAddNoteDialog(true)}
+        onClick={cardClickHandler}
         style={{ backgroundColor: props.color }}
       >
         <CardHeader
@@ -88,6 +102,7 @@ const NoteItem = (props) => {
         updateNote={props.updateNote}
         color={props.color}
       />
+      <CustomSnackbar snackPack={snackPack} setSnackPack={setSnackPack} />
     </Grid>
   );
 };
