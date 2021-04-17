@@ -41,6 +41,7 @@ const CustomDrawer = (props) => {
             handleSelectedChange={props.handleSelectedChange}
             user={props.user}
             logout={props.logout}
+            setIsDrawerOpen={props.setIsDrawerOpen}
           />
         </Drawer>
       </Hidden>
@@ -59,6 +60,7 @@ const CustomDrawer = (props) => {
             handleSelectedChange={props.handleSelectedChange}
             user={props.user}
             logout={props.logout}
+            setIsDrawerOpen={props.setIsDrawerOpen}
           />
         </Drawer>
       </Hidden>

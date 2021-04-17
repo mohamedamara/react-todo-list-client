@@ -133,6 +133,7 @@ const CustomDrawerBody = (props) => {
             onClick={() => {
               props.setAppBarTitle(content.title);
               props.handleSelectedChange(content.title);
+              props.setIsDrawerOpen(false);
             }}
             component={Link}
             to={content.title.toLowerCase()}

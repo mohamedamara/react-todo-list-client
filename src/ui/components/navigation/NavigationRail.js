@@ -120,6 +120,7 @@ const NavigationRail = ({
         handleSelectedChange={handleSelectedChange}
         user={user}
         logout={logout}
+        setIsDrawerOpen={setIsDrawerOpen}
       />
       <CustomBottomNavigation
         selectedNavigation={selectedNavigation}
