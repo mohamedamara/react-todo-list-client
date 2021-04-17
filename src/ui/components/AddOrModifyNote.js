@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -29,6 +29,18 @@ const validationSchema = yup.object({
 
 const AddOrModifyNote = (props) => {
   const [selectedColor, SetSelectedColor] = useState(props.color);
+  useEffect(() => {
+    if (!props.isUpdate) {
+      SetSelectedColor("#fff");
+    }
+    // eslint-disable-next-line
+  }, []);
+
+  const dialogCloseAction = () => {
+    SetSelectedColor(props.color);
+    props.close();
+  };
+
   const classes = useStyles();
   const formik = useFormik({
     enableReinitialize: true,
@@ -46,7 +58,7 @@ const AddOrModifyNote = (props) => {
         values.todoColor = selectedColor;
         props.addNote(values);
       }
-      handleSave();
+      handleClose();
     },
   });
 
@@ -55,15 +67,11 @@ const AddOrModifyNote = (props) => {
     formik.resetForm();
     SetSelectedColor(props.color);
   };
-  const handleSave = () => {
-    props.close();
-    formik.resetForm();
-  };
 
   return (
     <Dialog
       open={props.isOpen}
-      onClose={props.close}
+      onClose={dialogCloseAction}
       aria-labelledby="form-dialog-title"
       PaperProps={{
         style: {
