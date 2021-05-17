@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import PropTypes from "prop-types";
 import Masonry from "react-masonry-css";
-
+import socketIOClient from "socket.io-client";
 import {
   getNotes,
   moveToTrash,
@@ -38,6 +38,10 @@ const Notes = ({
 
   useEffect(() => {
     getNotes();
+    const socket = socketIOClient(`${process.env.REACT_APP_SERVER_URL}`);
+    socket.on("notes", (data) => {
+      getNotes();
+    });
     // eslint-disable-next-line
   }, []);
 
@@ -107,6 +111,7 @@ const Notes = ({
               content={item.todoContent}
               todoId={item._id}
               color={item.todoColor}
+              date={item.date}
               moveToTrash={moveToTrash}
               updateNote={updateNote}
             />

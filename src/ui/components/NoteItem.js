@@ -11,6 +11,7 @@ import AddOrModifyNote from "./AddOrModifyNote";
 import CustomSnackbar from "./CustomSnackbar";
 import RestoreFromTrashOutlinedIcon from "@material-ui/icons/RestoreFromTrashOutlined";
 import Tooltip from "@material-ui/core/Tooltip";
+import Moment from "react-moment";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -121,7 +122,9 @@ const NoteItem = (props) => {
                 </Grid>
               )}
               <Grid item>
-                <Tooltip title={props.isTrash ? "Delete forever" : "Delete"}>
+                <Tooltip
+                  title={props.isTrash ? "Delete forever" : "Move to trash"}
+                >
                   <IconButton
                     onClick={hanldeDelete}
                     aria-label="delete"
@@ -134,7 +137,7 @@ const NoteItem = (props) => {
             </Grid>
           }
           title={props.title}
-          subheader="13/04/2021"
+          subheader={<Moment format="DD/MM/YYYY">{props.date}</Moment>}
         />
         <CardContent>
           <Typography variant="body1" component="p">

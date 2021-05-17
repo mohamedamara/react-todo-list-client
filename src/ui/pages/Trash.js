@@ -6,6 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import PropTypes from "prop-types";
+import socketIOClient from "socket.io-client";
 import {
   getNotesInTrash,
   deleteNote,
@@ -37,6 +38,10 @@ const Trash = ({
 
   useEffect(() => {
     getNotesInTrash();
+    const socket = socketIOClient(`${process.env.REACT_APP_SERVER_URL}`);
+    socket.on("notes", (data) => {
+      getNotesInTrash();
+    });
     // eslint-disable-next-line
   }, []);
 
