@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
       position: "fixed",
       bottom: "0px",
       backgroundColor: theme.palette.primary.main,
+      zIndex: "9999",
     },
     [theme.breakpoints.only("md")]: {
       flexDirection: "column",
