@@ -14,7 +14,7 @@ import {
 export const loadUser = () => async (dispatch) => {
   setAuthToken(localStorage.jwt);
   try {
-    const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/auth`);
+    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/auth`);
     dispatch({
       type: USER_LOADED,
       payload: res.data,
@@ -32,7 +32,7 @@ export const register = (formData) => async (dispatch) => {
   };
   try {
     const res = await axios.post(
-      `${process.env.REACT_APP_API_BASE_URL}/users`,
+      `${process.env.REACT_APP_SERVER_URL}/api/users`,
       formData,
       config
     );
@@ -57,7 +57,7 @@ export const login = (formData) => async (dispatch) => {
   };
   try {
     const res = await axios.post(
-      `${process.env.REACT_APP_API_BASE_URL}/auth`,
+      `${process.env.REACT_APP_SERVER_URL}/api/auth`,
       formData,
       config
     );

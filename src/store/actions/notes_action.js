@@ -13,7 +13,7 @@ import {
 export const getNotes = () => async (dispatch) => {
   try {
     setLoading();
-    const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/todos`);
+    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/todos`);
     dispatch({
       type: GET_NOTES,
       payload: res.data,
@@ -30,7 +30,7 @@ export const getNotes = () => async (dispatch) => {
 export const getNotesInTrash = () => async (dispatch) => {
   try {
     setLoading();
-    const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/todos`);
+    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/todos`);
     dispatch({
       type: GET_NOTES_IN_TRASH,
       payload: res.data,
@@ -53,7 +53,7 @@ export const addNote = (note) => async (dispatch) => {
       },
     };
     const res = await axios.post(
-      `${process.env.REACT_APP_API_BASE_URL}/todos`,
+      `${process.env.REACT_APP_SERVER_URL}/api/todos`,
       note,
       config
     );
@@ -78,7 +78,7 @@ export const updateNote = (note) => async (dispatch) => {
       },
     };
     const res = await axios.put(
-      `${process.env.REACT_APP_API_BASE_URL}/todos/${note._id}`,
+      `${process.env.REACT_APP_SERVER_URL}/api/todos/${note._id}`,
       note,
       config
     );
@@ -103,7 +103,7 @@ export const moveToTrash = (note) => async (dispatch) => {
       },
     };
     await axios.put(
-      `${process.env.REACT_APP_API_BASE_URL}/todos/${note._id}`,
+      `${process.env.REACT_APP_SERVER_URL}/api/todos/${note._id}`,
       note,
       config
     );
@@ -128,7 +128,7 @@ export const restoreNote = (note) => async (dispatch) => {
       },
     };
     await axios.put(
-      `${process.env.REACT_APP_API_BASE_URL}/todos/${note._id}`,
+      `${process.env.REACT_APP_SERVER_URL}/api/todos/${note._id}`,
       note,
       config
     );
@@ -147,7 +147,7 @@ export const restoreNote = (note) => async (dispatch) => {
 export const deleteNote = (noteId) => async (dispatch) => {
   try {
     setLoading();
-    await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/todos/${noteId}`);
+    await axios.delete(`${process.env.REACT_APP_SERVER_URL}/api/todos/${noteId}`);
     dispatch({
       type: DELETE_NOTE,
       payload: noteId,
